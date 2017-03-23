@@ -1,0 +1,42 @@
+.popover.top-left, .popover.top-right {
+  margin-top: -5px;
+}
+.popover.bottom-left, .popover.bottom-right {
+  margin-top: 5px;
+}
+ 
+.popover.top-left .arrow {
+  bottom: 0;
+  left: 20%;
+  margin-left: -5px;
+  border-top: 5px solid #000000;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+}
+ 
+.popover.top-right .arrow {
+  bottom: 0;
+  left: 80%;
+  margin-left: -5px;
+  border-top: 5px solid #000000;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+}
+ 
+.popover.bottom-right .arrow {
+  top: 0;
+  left: 80%;
+  margin-left: -5px;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #000000;
+  border-left: 5px solid transparent;
+}
+ 
+.popover.bottom-left .arrow {
+  top: 0;
+  left: 20%;
+  margin-left: -5px;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #000000;
+  border-left: 5px solid transparent;
+}
