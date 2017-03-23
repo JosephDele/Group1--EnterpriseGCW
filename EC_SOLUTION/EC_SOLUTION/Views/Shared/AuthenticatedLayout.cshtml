@@ -1,0 +1,202 @@
+﻿@*@model GH1001C2_Group1_Project.BAL.Models.AuthenticatedModel*@
+
+@{
+    ViewBag.Title = "AuthenticatedLayout";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@section JavaScript
+{
+    <script src="/Styles/js/jquery.tmpl.min.js" type="text/javascript"></script>
+    <script src="/Styles/js/json2.js" type="text/javascript"></script>
+    @*<script type="text/javascript" class="init">
+            function SubmitReset(queryUrl) {
+                var strHtml = "";
+                var btnText = $("#modelBtnSave").text();
+                var formData = new FormData();
+                formData.append("SendID", $("#SendID").val());
+                formData.append("RecieveID", $("#RecieveID").val());
+                formData.append("Title", $("#Title").val());
+                formData.append("Content", $("#Content").val());
+                formData.append("fileUpload", document.getElementById("fileUpload").files[0]);
+
+                $("#modelBtnSave").html('<img src="/Styles/img/ajax-loaders/ajax-loader-1.gif" title="loading..."> ' + btnText);
+                $("#modelBtnSave").prop('disabled', true);
+
+                $.ajax({
+                    type: 'POST',
+                    url: queryUrl,
+                    dataType: 'json',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        // show error message
+                        strHtml = '<div class="alert alert-error">';
+                        strHtml += '<button type="button" class="close" data-dismiss="alert">×</button>';
+                        strHtml += '<strong>Error Connection</strong>';
+                        strHtml += '<p>Xảy ra lỗi trong quá trình cập nhật thông tin, vui lòng kiểm tra lại kết nối</p>';
+                        strHtml += '</div>';
+                        $("#modelBody_Messages").append(strHtml);
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        // show success message
+                        if (data.ProcessResult) {
+                            strHtml = '<div class="alert alert-success">';
+                            strHtml += '<button type="button" class="close" data-dismiss="alert">×</button>';
+                            strHtml += '<strong>Well done! (' + data.ProcessTime + ')</strong>';
+                            strHtml += '<p>' + data.ProcessMessage + '</p>';
+                            strHtml += '</div>';
+                            $("#messages_div").append(strHtml);
+
+                            $('#myModal').modal('hide');
+                        } else {
+                            strHtml = '<div class="alert alert-error">';
+                            strHtml += '<strong>Error (' + data.ProcessTime + ')</strong>';
+                            strHtml += '<button type="button" class="close" data-dismiss="alert">×</button>';
+                            strHtml += '<p>' + data.ProcessMessage + '</p>';
+                            strHtml += '</div>';
+                            $("#modelBody_Messages").append(strHtml);
+                        }
+                    },
+                    complete: function (jqXHR, textStatus) {
+                        // enable button
+                        $("#modelBtnSave").prop('disabled', false);
+                        $("#modelBtnSave").html("<span class='icon icon-check icon-green'></span> " + btnText);
+                    }
+                });
+            }
+
+            function SendMessages(sendId, recieveId, recieveName) {
+                var strHtml = "";
+
+                $('#modelHeader').html("<span class='icon icon-envelope-closed'></span> Send message to " + recieveName);
+                $("#modelBody").empty();
+
+                strHtml = '<input type="hidden" name="ID" value="0"></input>';
+                strHtml += '<input type="hidden" id="SendID" name="SendID" value="' + sendId + '"></input>';
+                strHtml += '<input type="hidden" id="RecieveID" name="RecieveID" value="' + recieveId + '"></input>';
+                strHtml += '<div id="modelBody_Messages"></div>';
+                strHtml += '<div class="form-group">';
+                strHtml += '<label for="Title" class="control-label">Subject:</label>';
+                strHtml += '<input type="text" class="form-control" id="Title" style="width:97%;" name="Title">';
+                strHtml += '</div>';
+                strHtml += '<div class="form-group">';
+                strHtml += '<label for="fileUpload" class="control-label">Attach file:</label>';
+                strHtml += '<input type="file" class="form-control" id="fileUpload" style="width:97%;">';
+                strHtml += '</div>';
+                strHtml += '<div class="form-group">';
+                strHtml += '<label for="Content" class="control-label">Contents:</label>';
+                strHtml += '<textarea class="cleditor" name="Content" id="Content" rows="3" style="width: 97%;"></textarea>';
+                strHtml += '</div>';
+                $("#modelBody").append('<form id="frmReset" enctype="multipart/form-data">' + strHtml + '</form>');
+                $("#modelBtnSave").attr("onclick", "SubmitReset('/Message/jSend')");
+                $("#modelBtnSave").html("Send message!");
+                $("#Content").cleditor();
+                $("#fileUpload").not('[data-no-uniform="true"],#uniform-is-ajax').uniform();
+
+                $('#myModal').modal('show');
+            }
+        </script>*@
+
+    @RenderSection("JavaScript", false)
+}
+
+<div class="row-fluid" id="content">
+    <noscript>
+        <div class="alert alert-block span10">
+            <h4 class="alert-heading">Warning!</h4>
+            <p>You need to have <a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a> enabled to use this site.</p>
+        </div>
+    </noscript>
+
+    @*<div>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#">Home</a> <span class="divider">|</span>
+                </li>
+                <li>
+                    <a href="#">Forms</a>
+                </li>
+            </ul>
+        </div>*@
+
+    <div class="row-fluid">
+        @if (ViewBag.CurrentUser != null)
+        {
+            <a data-rel="tooltip" class="well span3 top-block" href="@ViewBag.CurrentUser.DashboardBtn1.Link" data-original-title="@ViewBag.CurrentUser.DashboardBtn1.Title">
+                <span class="@ViewBag.CurrentUser.DashboardBtn1.Icon"></span>
+                <div>@ViewBag.CurrentUser.DashboardBtn1.Text</div>
+                <div>@ViewBag.CurrentUser.DashboardBtn1.Description</div>
+                <span class="notification">@ViewBag.CurrentUser.DashboardBtn1.Quantity</span>
+            </a>
+
+            <a data-rel="tooltip" class="well span3 top-block" href="@ViewBag.CurrentUser.DashboardBtn2.Link" data-original-title="@ViewBag.CurrentUser.DashboardBtn2.Title">
+                <span class="@ViewBag.CurrentUser.DashboardBtn2.Icon"></span>
+                <div>@ViewBag.CurrentUser.DashboardBtn2.Text</div>
+                <div>@ViewBag.CurrentUser.DashboardBtn2.Description</div>
+                <span class="notification">@ViewBag.CurrentUser.DashboardBtn2.Quantity</span>
+            </a>
+
+            <a data-rel="tooltip" class="well span3 top-block" href="@ViewBag.CurrentUser.DashboardBtn3.Link" data-original-title="@ViewBag.CurrentUser.DashboardBtn3.Title">
+                <span class="@ViewBag.CurrentUser.DashboardBtn3.Icon"></span>
+                <div>@ViewBag.CurrentUser.DashboardBtn3.Text</div>
+                <div>@ViewBag.CurrentUser.DashboardBtn3.Description</div>
+                <span class="notification">@ViewBag.CurrentUser.DashboardBtn3.Quantity</span>
+            </a>
+
+            <a data-rel="tooltip" class="well span3 top-block" href="@ViewBag.CurrentUser.DashboardBtn4.Link" data-original-title="@ViewBag.CurrentUser.DashboardBtn4.Title">
+                <span class="@ViewBag.CurrentUser.DashboardBtn4.Icon"></span>
+                <div>@ViewBag.CurrentUser.DashboardBtn4.Text</div>
+                <div>@ViewBag.CurrentUser.DashboardBtn4.Description</div>
+                <span class="notification">@ViewBag.CurrentUser.DashboardBtn4.Quantity</span>
+            </a>
+        }
+    </div>
+
+    <div id="messages_div">
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-error">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>Error</strong>
+                <p>@ViewBag.ErrorMessage</p>
+            </div>
+        }
+        @if (ViewBag.WarnMessage != null)
+        {
+            <div class="alert alert-error">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>Warning</strong>
+                <p>@ViewBag.WarnMessage</p>
+            </div>
+        }
+        @if (ViewBag.SuccessMessage != null)
+        {
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>Well done!</strong>
+                <p>@ViewBag.SuccessMessage</p>
+            </div>
+        }
+        @if (ViewBag.AttentionMessage != null)
+        {
+            <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>Heads up!</strong>
+                <p>@ViewBag.AttentionMessage</p>
+            </div>
+        }
+        @if (ViewBag.AlertMessage != null)
+        {
+            <div class="alert alert-block ">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <h4 class="alert-heading">Warning!</h4>
+                <p>@ViewBag.AlertMessage</p>
+            </div>
+        }
+    </div>
+
+    @RenderBody()
+</div>
+<!--/fluid-row-->

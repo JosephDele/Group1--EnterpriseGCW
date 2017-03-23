@@ -1,0 +1,56 @@
+﻿@*@model GH1001C2_Group1_Project.BAL.Models.NonAuthenticatedModel*@
+
+@{
+    ViewBag.Title = "NonAuthenticatedLayout";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<noscript>
+    <div class="alert alert-block span12">
+        <h4 class="alert-heading">Warning!</h4>
+        <p>You need to have <a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a> enabled to use this site.</p>
+    </div>
+</noscript>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Error</strong>
+        <p>@ViewBag.ErrorMessage</p>
+    </div>
+}
+@if (ViewBag.WarnMessage != null)
+{
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Warning</strong>
+        <p>@ViewBag.WarnMessage</p>
+    </div>
+}
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Well done!</strong>
+        <p>@ViewBag.SuccessMessage</p>
+    </div>
+}
+@if (ViewBag.AttentionMessage != null)
+{
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Heads up!</strong>
+        <p>@ViewBag.AttentionMessage</p>
+    </div>
+}
+@if (ViewBag.AlertMessage != null)
+{
+    <div class="alert alert-block ">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <h4 class="alert-heading">Warning!</h4>
+        <p>@ViewBag.AlertMessage</p>
+    </div>
+}
+
+@RenderBody()

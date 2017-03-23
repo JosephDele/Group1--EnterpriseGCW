@@ -7,5 +7,9 @@ namespace EC_SOLUTION.Models.EC_DB
 {
     public class Login
     {
+        public string username { get; set; }
+        public string password { get; set; }
+        public string role { get; set; }
+        public string userid { get; set; }
     }
 }

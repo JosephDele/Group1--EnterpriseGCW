@@ -1,0 +1,609 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ECDB_EWDFINALModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ACEDEMIC_YEAR">
+          <Key>
+            <PropertyRef Name="ACEDEMICYEARID" />
+          </Key>
+          <Property Name="ACEDEMICYEARID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YEAR" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="STATUS" Type="bit" />
+          <Property Name="closuredate" Type="date" />
+        </EntityType>
+        <EntityType Name="EC_ADMINISTRATOR">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="First_Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="Last_Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="Username" Type="nvarchar" MaxLength="30" />
+          <Property Name="Password" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="EC_CLAIMS">
+          <Key>
+            <PropertyRef Name="ClaimId" />
+          </Key>
+          <Property Name="ClaimId" Type="int" Nullable="false" />
+          <Property Name="StudentId" Type="nvarchar" MaxLength="10" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="Date" Type="date" />
+          <Property Name="ACEDEMICYEARID" Type="int" />
+          <Property Name="FacultyId" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="EC_COORDINATOR">
+          <Key>
+            <PropertyRef Name="EC_CoodId" />
+          </Key>
+          <Property Name="EC_CoodId" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="First_Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="Last_Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="Username" Type="nvarchar" MaxLength="30" />
+          <Property Name="Password" Type="nvarchar" MaxLength="30" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="StudentId" Type="nvarchar" MaxLength="10" />
+          <Property Name="FacultyId" Type="nvarchar" MaxLength="10" />
+          <Property Name="ClaimId" Type="int" />
+        </EntityType>
+        <EntityType Name="EC_MANAGER">
+          <Key>
+            <PropertyRef Name="ManagerId" />
+          </Key>
+          <Property Name="ManagerId" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="First_Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="Last_Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="Username" Type="nvarchar" MaxLength="30" />
+          <Property Name="Password" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="FACULTY">
+          <Key>
+            <PropertyRef Name="FacultyId" />
+          </Key>
+          <Property Name="FacultyId" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Faculty_Name" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="STUDENT">
+          <Key>
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="StudentId" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="First_Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="Last_Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="Username" Type="nvarchar" MaxLength="30" />
+          <Property Name="Password" Type="nvarchar" MaxLength="30" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="DOB" Type="nvarchar" MaxLength="20" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="FacultyId" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Uploads">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ContentType" Type="varchar" MaxLength="50" />
+          <Property Name="Size" Type="bigint" />
+          <Property Name="Data" Type="varbinary(max)" />
+          <Property Name="Time" Type="datetime" />
+          <Property Name="Status" Type="int" />
+          <Property Name="ClaimId" Type="int" />
+        </EntityType>
+        <Association Name="FK__EC_CLAIMS__ACEDE__20C1E124">
+          <End Role="ACEDEMIC_YEAR" Type="Self.ACEDEMIC_YEAR" Multiplicity="0..1" />
+          <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACEDEMIC_YEAR">
+              <PropertyRef Name="ACEDEMICYEARID" />
+            </Principal>
+            <Dependent Role="EC_CLAIMS">
+              <PropertyRef Name="ACEDEMICYEARID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EC_CLAIMS__Facul__21B6055D">
+          <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
+          <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACULTY">
+              <PropertyRef Name="FacultyId" />
+            </Principal>
+            <Dependent Role="EC_CLAIMS">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EC_CLAIMS__Stude__22AA2996">
+          <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="0..1" />
+          <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STUDENT">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="EC_CLAIMS">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EC_COORDI__Claim__239E4DCF">
+          <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="0..1" />
+          <End Role="EC_COORDINATOR" Type="Self.EC_COORDINATOR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EC_CLAIMS">
+              <PropertyRef Name="ClaimId" />
+            </Principal>
+            <Dependent Role="EC_COORDINATOR">
+              <PropertyRef Name="ClaimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EC_COORDI__Facul__24927208">
+          <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
+          <End Role="EC_COORDINATOR" Type="Self.EC_COORDINATOR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACULTY">
+              <PropertyRef Name="FacultyId" />
+            </Principal>
+            <Dependent Role="EC_COORDINATOR">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EC_COORDI__Stude__25869641">
+          <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="0..1" />
+          <End Role="EC_COORDINATOR" Type="Self.EC_COORDINATOR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STUDENT">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="EC_COORDINATOR">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__STUDENT__Faculty__267ABA7A">
+          <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
+          <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACULTY">
+              <PropertyRef Name="FacultyId" />
+            </Principal>
+            <Dependent Role="STUDENT">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Uploads__ClaimId__276EDEB3">
+          <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="0..1" />
+          <End Role="Uploads" Type="Self.Uploads" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EC_CLAIMS">
+              <PropertyRef Name="ClaimId" />
+            </Principal>
+            <Dependent Role="Uploads">
+              <PropertyRef Name="ClaimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ECDB_EWDFINALModelStoreContainer">
+          <EntitySet Name="ACEDEMIC_YEAR" EntityType="Self.ACEDEMIC_YEAR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EC_ADMINISTRATOR" EntityType="Self.EC_ADMINISTRATOR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EC_CLAIMS" EntityType="Self.EC_CLAIMS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EC_COORDINATOR" EntityType="Self.EC_COORDINATOR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EC_MANAGER" EntityType="Self.EC_MANAGER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FACULTY" EntityType="Self.FACULTY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STUDENT" EntityType="Self.STUDENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Uploads" EntityType="Self.Uploads" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__EC_CLAIMS__ACEDE__20C1E124" Association="Self.FK__EC_CLAIMS__ACEDE__20C1E124">
+            <End Role="ACEDEMIC_YEAR" EntitySet="ACEDEMIC_YEAR" />
+            <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EC_CLAIMS__Facul__21B6055D" Association="Self.FK__EC_CLAIMS__Facul__21B6055D">
+            <End Role="FACULTY" EntitySet="FACULTY" />
+            <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EC_CLAIMS__Stude__22AA2996" Association="Self.FK__EC_CLAIMS__Stude__22AA2996">
+            <End Role="STUDENT" EntitySet="STUDENT" />
+            <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EC_COORDI__Claim__239E4DCF" Association="Self.FK__EC_COORDI__Claim__239E4DCF">
+            <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
+            <End Role="EC_COORDINATOR" EntitySet="EC_COORDINATOR" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EC_COORDI__Facul__24927208" Association="Self.FK__EC_COORDI__Facul__24927208">
+            <End Role="FACULTY" EntitySet="FACULTY" />
+            <End Role="EC_COORDINATOR" EntitySet="EC_COORDINATOR" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EC_COORDI__Stude__25869641" Association="Self.FK__EC_COORDI__Stude__25869641">
+            <End Role="STUDENT" EntitySet="STUDENT" />
+            <End Role="EC_COORDINATOR" EntitySet="EC_COORDINATOR" />
+          </AssociationSet>
+          <AssociationSet Name="FK__STUDENT__Faculty__267ABA7A" Association="Self.FK__STUDENT__Faculty__267ABA7A">
+            <End Role="FACULTY" EntitySet="FACULTY" />
+            <End Role="STUDENT" EntitySet="STUDENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Uploads__ClaimId__276EDEB3" Association="Self.FK__Uploads__ClaimId__276EDEB3">
+            <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
+            <End Role="Uploads" EntitySet="Uploads" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ECDB_EWDFINALModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ACEDEMIC_YEAR">
+          <Key>
+            <PropertyRef Name="ACEDEMICYEARID" />
+          </Key>
+          <Property Name="ACEDEMICYEARID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YEAR" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="STATUS" Type="Boolean" />
+          <Property Name="closuredate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="EC_CLAIMS" Relationship="Self.FK__EC_CLAIMS__ACEDE__20C1E124" FromRole="ACEDEMIC_YEAR" ToRole="EC_CLAIMS" />
+        </EntityType>
+        <EntityType Name="EC_ADMINISTRATOR">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="First_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Last_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="EC_CLAIMS">
+          <Key>
+            <PropertyRef Name="ClaimId" />
+          </Key>
+          <Property Name="ClaimId" Type="Int32" Nullable="false" />
+          <Property Name="StudentId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="ACEDEMICYEARID" Type="Int32" />
+          <Property Name="FacultyId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ACEDEMIC_YEAR" Relationship="Self.FK__EC_CLAIMS__ACEDE__20C1E124" FromRole="EC_CLAIMS" ToRole="ACEDEMIC_YEAR" />
+          <NavigationProperty Name="FACULTY" Relationship="Self.FK__EC_CLAIMS__Facul__21B6055D" FromRole="EC_CLAIMS" ToRole="FACULTY" />
+          <NavigationProperty Name="STUDENT" Relationship="Self.FK__EC_CLAIMS__Stude__22AA2996" FromRole="EC_CLAIMS" ToRole="STUDENT" />
+          <NavigationProperty Name="EC_COORDINATOR" Relationship="Self.FK__EC_COORDI__Claim__239E4DCF" FromRole="EC_CLAIMS" ToRole="EC_COORDINATOR" />
+          <NavigationProperty Name="Uploads" Relationship="Self.FK__Uploads__ClaimId__276EDEB3" FromRole="EC_CLAIMS" ToRole="Uploads" />
+        </EntityType>
+        <EntityType Name="EC_COORDINATOR">
+          <Key>
+            <PropertyRef Name="EC_CoodId" />
+          </Key>
+          <Property Name="EC_CoodId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="First_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Last_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StudentId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="FacultyId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimId" Type="Int32" />
+          <NavigationProperty Name="EC_CLAIMS" Relationship="Self.FK__EC_COORDI__Claim__239E4DCF" FromRole="EC_COORDINATOR" ToRole="EC_CLAIMS" />
+          <NavigationProperty Name="FACULTY" Relationship="Self.FK__EC_COORDI__Facul__24927208" FromRole="EC_COORDINATOR" ToRole="FACULTY" />
+          <NavigationProperty Name="STUDENT" Relationship="Self.FK__EC_COORDI__Stude__25869641" FromRole="EC_COORDINATOR" ToRole="STUDENT" />
+        </EntityType>
+        <EntityType Name="EC_MANAGER">
+          <Key>
+            <PropertyRef Name="ManagerId" />
+          </Key>
+          <Property Name="ManagerId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="First_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Last_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="FACULTY">
+          <Key>
+            <PropertyRef Name="FacultyId" />
+          </Key>
+          <Property Name="FacultyId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Faculty_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EC_CLAIMS" Relationship="Self.FK__EC_CLAIMS__Facul__21B6055D" FromRole="FACULTY" ToRole="EC_CLAIMS" />
+          <NavigationProperty Name="EC_COORDINATOR" Relationship="Self.FK__EC_COORDI__Facul__24927208" FromRole="FACULTY" ToRole="EC_COORDINATOR" />
+          <NavigationProperty Name="STUDENTs" Relationship="Self.FK__STUDENT__Faculty__267ABA7A" FromRole="FACULTY" ToRole="STUDENT" />
+        </EntityType>
+        <EntityType Name="STUDENT">
+          <Key>
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="StudentId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="First_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Last_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DOB" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FacultyId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EC_CLAIMS" Relationship="Self.FK__EC_CLAIMS__Stude__22AA2996" FromRole="STUDENT" ToRole="EC_CLAIMS" />
+          <NavigationProperty Name="EC_COORDINATOR" Relationship="Self.FK__EC_COORDI__Stude__25869641" FromRole="STUDENT" ToRole="EC_COORDINATOR" />
+          <NavigationProperty Name="FACULTY" Relationship="Self.FK__STUDENT__Faculty__267ABA7A" FromRole="STUDENT" ToRole="FACULTY" />
+        </EntityType>
+        <EntityType Name="Upload">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Size" Type="Int64" />
+          <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Time" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="ClaimId" Type="Int32" />
+          <NavigationProperty Name="EC_CLAIMS" Relationship="Self.FK__Uploads__ClaimId__276EDEB3" FromRole="Uploads" ToRole="EC_CLAIMS" />
+        </EntityType>
+        <Association Name="FK__EC_CLAIMS__ACEDE__20C1E124">
+          <End Role="ACEDEMIC_YEAR" Type="Self.ACEDEMIC_YEAR" Multiplicity="0..1" />
+          <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACEDEMIC_YEAR">
+              <PropertyRef Name="ACEDEMICYEARID" />
+            </Principal>
+            <Dependent Role="EC_CLAIMS">
+              <PropertyRef Name="ACEDEMICYEARID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EC_CLAIMS__Facul__21B6055D">
+          <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
+          <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACULTY">
+              <PropertyRef Name="FacultyId" />
+            </Principal>
+            <Dependent Role="EC_CLAIMS">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EC_CLAIMS__Stude__22AA2996">
+          <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="0..1" />
+          <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STUDENT">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="EC_CLAIMS">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EC_COORDI__Claim__239E4DCF">
+          <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="0..1" />
+          <End Role="EC_COORDINATOR" Type="Self.EC_COORDINATOR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EC_CLAIMS">
+              <PropertyRef Name="ClaimId" />
+            </Principal>
+            <Dependent Role="EC_COORDINATOR">
+              <PropertyRef Name="ClaimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Uploads__ClaimId__276EDEB3">
+          <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="0..1" />
+          <End Role="Uploads" Type="Self.Upload" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EC_CLAIMS">
+              <PropertyRef Name="ClaimId" />
+            </Principal>
+            <Dependent Role="Uploads">
+              <PropertyRef Name="ClaimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EC_COORDI__Facul__24927208">
+          <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
+          <End Role="EC_COORDINATOR" Type="Self.EC_COORDINATOR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACULTY">
+              <PropertyRef Name="FacultyId" />
+            </Principal>
+            <Dependent Role="EC_COORDINATOR">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EC_COORDI__Stude__25869641">
+          <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="0..1" />
+          <End Role="EC_COORDINATOR" Type="Self.EC_COORDINATOR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STUDENT">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="EC_COORDINATOR">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__STUDENT__Faculty__267ABA7A">
+          <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
+          <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACULTY">
+              <PropertyRef Name="FacultyId" />
+            </Principal>
+            <Dependent Role="STUDENT">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ECDB_EWDFINALEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ACEDEMIC_YEAR" EntityType="Self.ACEDEMIC_YEAR" />
+          <EntitySet Name="EC_ADMINISTRATOR" EntityType="Self.EC_ADMINISTRATOR" />
+          <EntitySet Name="EC_CLAIMS" EntityType="Self.EC_CLAIMS" />
+          <EntitySet Name="EC_COORDINATOR" EntityType="Self.EC_COORDINATOR" />
+          <EntitySet Name="EC_MANAGER" EntityType="Self.EC_MANAGER" />
+          <EntitySet Name="FACULTies" EntityType="Self.FACULTY" />
+          <EntitySet Name="STUDENTs" EntityType="Self.STUDENT" />
+          <EntitySet Name="Uploads" EntityType="Self.Upload" />
+          <AssociationSet Name="FK__EC_CLAIMS__ACEDE__20C1E124" Association="Self.FK__EC_CLAIMS__ACEDE__20C1E124">
+            <End Role="ACEDEMIC_YEAR" EntitySet="ACEDEMIC_YEAR" />
+            <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EC_CLAIMS__Facul__21B6055D" Association="Self.FK__EC_CLAIMS__Facul__21B6055D">
+            <End Role="FACULTY" EntitySet="FACULTies" />
+            <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EC_CLAIMS__Stude__22AA2996" Association="Self.FK__EC_CLAIMS__Stude__22AA2996">
+            <End Role="STUDENT" EntitySet="STUDENTs" />
+            <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EC_COORDI__Claim__239E4DCF" Association="Self.FK__EC_COORDI__Claim__239E4DCF">
+            <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
+            <End Role="EC_COORDINATOR" EntitySet="EC_COORDINATOR" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Uploads__ClaimId__276EDEB3" Association="Self.FK__Uploads__ClaimId__276EDEB3">
+            <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
+            <End Role="Uploads" EntitySet="Uploads" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EC_COORDI__Facul__24927208" Association="Self.FK__EC_COORDI__Facul__24927208">
+            <End Role="FACULTY" EntitySet="FACULTies" />
+            <End Role="EC_COORDINATOR" EntitySet="EC_COORDINATOR" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EC_COORDI__Stude__25869641" Association="Self.FK__EC_COORDI__Stude__25869641">
+            <End Role="STUDENT" EntitySet="STUDENTs" />
+            <End Role="EC_COORDINATOR" EntitySet="EC_COORDINATOR" />
+          </AssociationSet>
+          <AssociationSet Name="FK__STUDENT__Faculty__267ABA7A" Association="Self.FK__STUDENT__Faculty__267ABA7A">
+            <End Role="FACULTY" EntitySet="FACULTies" />
+            <End Role="STUDENT" EntitySet="STUDENTs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ECDB_EWDFINALModelStoreContainer" CdmEntityContainer="ECDB_EWDFINALEntities">
+          <EntitySetMapping Name="ACEDEMIC_YEAR">
+            <EntityTypeMapping TypeName="ECDB_EWDFINALModel.ACEDEMIC_YEAR">
+              <MappingFragment StoreEntitySet="ACEDEMIC_YEAR">
+                <ScalarProperty Name="ACEDEMICYEARID" ColumnName="ACEDEMICYEARID" />
+                <ScalarProperty Name="YEAR" ColumnName="YEAR" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="closuredate" ColumnName="closuredate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EC_ADMINISTRATOR">
+            <EntityTypeMapping TypeName="ECDB_EWDFINALModel.EC_ADMINISTRATOR">
+              <MappingFragment StoreEntitySet="EC_ADMINISTRATOR">
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EC_CLAIMS">
+            <EntityTypeMapping TypeName="ECDB_EWDFINALModel.EC_CLAIMS">
+              <MappingFragment StoreEntitySet="EC_CLAIMS">
+                <ScalarProperty Name="ClaimId" ColumnName="ClaimId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ACEDEMICYEARID" ColumnName="ACEDEMICYEARID" />
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EC_COORDINATOR">
+            <EntityTypeMapping TypeName="ECDB_EWDFINALModel.EC_COORDINATOR">
+              <MappingFragment StoreEntitySet="EC_COORDINATOR">
+                <ScalarProperty Name="EC_CoodId" ColumnName="EC_CoodId" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
+                <ScalarProperty Name="ClaimId" ColumnName="ClaimId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EC_MANAGER">
+            <EntityTypeMapping TypeName="ECDB_EWDFINALModel.EC_MANAGER">
+              <MappingFragment StoreEntitySet="EC_MANAGER">
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FACULTies">
+            <EntityTypeMapping TypeName="ECDB_EWDFINALModel.FACULTY">
+              <MappingFragment StoreEntitySet="FACULTY">
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
+                <ScalarProperty Name="Faculty_Name" ColumnName="Faculty_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STUDENTs">
+            <EntityTypeMapping TypeName="ECDB_EWDFINALModel.STUDENT">
+              <MappingFragment StoreEntitySet="STUDENT">
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uploads">
+            <EntityTypeMapping TypeName="ECDB_EWDFINALModel.Upload">
+              <MappingFragment StoreEntitySet="Uploads">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ClaimId" ColumnName="ClaimId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

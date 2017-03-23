@@ -1,0 +1,35 @@
+﻿@model EC_SOLUTION.STUDENT
+
+@{
+    ViewBag.Title = "Generate";
+}
+
+<h2>Generate</h2>
+
+<div>
+    <h4>STUDENT</h4>
+    <hr />
+    <center><h3>Student Username and password is set to : </h3></center>
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

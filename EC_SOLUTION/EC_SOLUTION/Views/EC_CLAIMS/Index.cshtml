@@ -1,0 +1,58 @@
+﻿@model IEnumerable<EC_SOLUTION.EC_CLAIMS>
+@using EC_SOLUTION.Models.EC_DB;
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACEDEMIC_YEAR.YEAR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FACULTY.Faculty_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STUDENT.First_Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACEDEMIC_YEAR.YEAR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FACULTY.Faculty_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STUDENT.First_Name)
+        </td>
+        
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ClaimId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ClaimId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ClaimId })
+        </td>
+    </tr>
+}
+
+</table>
