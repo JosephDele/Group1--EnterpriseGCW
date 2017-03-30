@@ -1,0 +1,42 @@
+﻿@model EC_SOLUTION.ACEDEMIC_YEAR
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ACEDEMIC_YEAR</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.YEAR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YEAR)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STATUS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STATUS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.closuredate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.closuredate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ACEDEMICYEARID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

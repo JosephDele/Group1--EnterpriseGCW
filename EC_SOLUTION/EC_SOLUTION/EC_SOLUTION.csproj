@@ -158,11 +158,20 @@
     <Compile Include="ACEDEMIC_YEAR.cs">
       <DependentUpon>ECentity.tt</DependentUpon>
     </Compile>
+    <Compile Include="ANAYLYSI.cs">
+      <DependentUpon>ECentity.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="ClaimStatu.cs">
+      <DependentUpon>ECentity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\ACEDEMIC_YEARController.cs" />
+    <Compile Include="Controllers\EC_CLAIMSController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="ECentity.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -201,6 +210,9 @@
     <Compile Include="Models\EC_DB\MMS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="STUDENT.cs">
+      <DependentUpon>ECentity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
       <DependentUpon>ECentity.tt</DependentUpon>
     </Compile>
     <Compile Include="Upload.cs">
@@ -962,6 +974,11 @@
     <Content Include="Views\Student\Edit.cshtml" />
     <Content Include="Views\Student\Generate.cshtml" />
     <Content Include="Views\Student\ResetPassword.cshtml" />
+    <Content Include="Views\ACEDEMIC_YEAR\Create.cshtml" />
+    <Content Include="Views\ACEDEMIC_YEAR\Delete.cshtml" />
+    <Content Include="Views\ACEDEMIC_YEAR\Details.cshtml" />
+    <Content Include="Views\ACEDEMIC_YEAR\Edit.cshtml" />
+    <Content Include="Views\ACEDEMIC_YEAR\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

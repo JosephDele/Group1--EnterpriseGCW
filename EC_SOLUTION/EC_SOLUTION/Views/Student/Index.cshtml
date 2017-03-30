@@ -38,39 +38,40 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.First_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Last_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DOB)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @(new ECDB_EWDFINALEntities().FACULTies.Find(item.FacultyId).Faculty_Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.StudentId }) |
-             |
-            @Html.ActionLink("Delete", "Delete", new { id=item.StudentId })
-            @Html.ActionLink("Reset", "Generate", new { id = item.StudentId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.First_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Last_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DOB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @(new ECDB_EWDFINALEntities().FACULTies.Find(item.FacultyId).Faculty_Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.StudentId }) |
+                |
+                @Html.ActionLink("Delete", "Delete", new { id = item.StudentId })
+                @Html.ActionLink("Reset", "Generate", new { id = item.StudentId })
+            </td>
+        </tr>
+    }
 
 </table>

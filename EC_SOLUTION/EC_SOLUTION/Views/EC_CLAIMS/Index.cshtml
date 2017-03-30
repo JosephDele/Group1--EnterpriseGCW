@@ -29,30 +29,31 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ACEDEMIC_YEAR.YEAR)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FACULTY.Faculty_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.STUDENT.First_Name)
-        </td>
-        
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ClaimId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ClaimId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ClaimId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ACEDEMIC_YEAR.YEAR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FACULTY.Faculty_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.STUDENT.First_Name)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ClaimId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ClaimId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ClaimId })
+            </td>
+        </tr>
+    }
 
 </table>

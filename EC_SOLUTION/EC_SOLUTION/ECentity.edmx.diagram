@@ -4,23 +4,27 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f66e9077d3a04bbfa569741fd8a8a463" Name="Diagram1">
+      <Diagram DiagramId="d0e92f4615234467a1937686ef0549e6" Name="Diagram1">
         <EntityTypeShape EntityType="ECDB_EWDFINALModel.ACEDEMIC_YEAR" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ECDB_EWDFINALModel.EC_ADMINISTRATOR" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECDB_EWDFINALModel.ANAYLYSI" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECDB_EWDFINALModel.ClaimStatu" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECDB_EWDFINALModel.EC_ADMINISTRATOR" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ECDB_EWDFINALModel.EC_CLAIMS" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ECDB_EWDFINALModel.EC_COORDINATOR" Width="1.5" PointX="7.5" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ECDB_EWDFINALModel.EC_MANAGER" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECDB_EWDFINALModel.EC_COORDINATOR" Width="1.5" PointX="7.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECDB_EWDFINALModel.EC_MANAGER" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ECDB_EWDFINALModel.FACULTY" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ECDB_EWDFINALModel.STUDENT" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ECDB_EWDFINALModel.Upload" Width="1.5" PointX="7.5" PointY="11.75" IsExpanded="true" />
-        <AssociationConnector Association="ECDB_EWDFINALModel.FK__EC_CLAIMS__ACEDE__20C1E124" ManuallyRouted="false" />
-        <AssociationConnector Association="ECDB_EWDFINALModel.FK__EC_CLAIMS__Facul__21B6055D" ManuallyRouted="false" />
-        <AssociationConnector Association="ECDB_EWDFINALModel.FK__EC_CLAIMS__Stude__22AA2996" ManuallyRouted="false" />
-        <AssociationConnector Association="ECDB_EWDFINALModel.FK__EC_COORDI__Claim__239E4DCF" ManuallyRouted="false" />
-        <AssociationConnector Association="ECDB_EWDFINALModel.FK__Uploads__ClaimId__276EDEB3" ManuallyRouted="false" />
-        <AssociationConnector Association="ECDB_EWDFINALModel.FK__EC_COORDI__Facul__24927208" ManuallyRouted="false" />
-        <AssociationConnector Association="ECDB_EWDFINALModel.FK__EC_COORDI__Stude__25869641" ManuallyRouted="false" />
-        <AssociationConnector Association="ECDB_EWDFINALModel.FK__STUDENT__Faculty__267ABA7A" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ECDB_EWDFINALModel.STUDENT" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECDB_EWDFINALModel.sysdiagram" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECDB_EWDFINALModel.Upload" Width="1.5" PointX="7.5" PointY="12" IsExpanded="true" />
+        <AssociationConnector Association="ECDB_EWDFINALModel.FK__EC_CLAIMS__ACEDE__4316F928" ManuallyRouted="false" />
+        <AssociationConnector Association="ECDB_EWDFINALModel.FK__EC_CLAIMS__Claim__48CFD27E" ManuallyRouted="false" />
+        <AssociationConnector Association="ECDB_EWDFINALModel.FK__EC_CLAIMS__Facul__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="ECDB_EWDFINALModel.FK__EC_CLAIMS__Stude__1920BF5C" ManuallyRouted="false" />
+        <AssociationConnector Association="ECDB_EWDFINALModel.FK__EC_COORDI__Claim__1DE57479" ManuallyRouted="false" />
+        <AssociationConnector Association="ECDB_EWDFINALModel.FK__Uploads__ClaimId__21B6055D" ManuallyRouted="false" />
+        <AssociationConnector Association="ECDB_EWDFINALModel.FK__EC_COORDI__Facul__1CF15040" ManuallyRouted="false" />
+        <AssociationConnector Association="ECDB_EWDFINALModel.FK__EC_COORDI__Stude__1BFD2C07" ManuallyRouted="false" />
+        <AssociationConnector Association="ECDB_EWDFINALModel.FK__STUDENT__Faculty__164452B1" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

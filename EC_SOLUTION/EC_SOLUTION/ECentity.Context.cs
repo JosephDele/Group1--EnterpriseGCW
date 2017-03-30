@@ -26,12 +26,15 @@ namespace EC_SOLUTION
         }
     
         public virtual DbSet<ACEDEMIC_YEAR> ACEDEMIC_YEAR { get; set; }
+        public virtual DbSet<ANAYLYSI> ANAYLYSIS { get; set; }
+        public virtual DbSet<ClaimStatu> ClaimStatus { get; set; }
         public virtual DbSet<EC_ADMINISTRATOR> EC_ADMINISTRATOR { get; set; }
         public virtual DbSet<EC_CLAIMS> EC_CLAIMS { get; set; }
         public virtual DbSet<EC_COORDINATOR> EC_COORDINATOR { get; set; }
         public virtual DbSet<EC_MANAGER> EC_MANAGER { get; set; }
         public virtual DbSet<FACULTY> FACULTies { get; set; }
         public virtual DbSet<STUDENT> STUDENTs { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Upload> Uploads { get; set; }
     }
 }
