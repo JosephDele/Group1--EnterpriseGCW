@@ -16,7 +16,7 @@
 
 
 
-@using (Html.BeginForm("Index","Coordinator",FormMethod.Get,null))
+@using (Html.BeginForm("Index", "Coordinator", FormMethod.Get, null))
 {
     @Html.DropDownList("ClaimStatus", null, htmlAttributes: new { @class = "form-control shift" })
     <input type="submit" value="Search" class="btn btn-default btn-primary btn-md shift" />
@@ -24,7 +24,7 @@
 
 <table class="table">
 
-    
+
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Description)
@@ -44,28 +44,29 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ACEDEMIC_YEAR.YEAR)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FACULTY.Faculty_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.STUDENT.First_Name)
-        </td>
-       
-        <td>
-            @Html.ActionLink("View", "Details", new { id=item.ClaimId }) 
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ACEDEMIC_YEAR.YEAR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FACULTY.Faculty_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.STUDENT.First_Name)
+            </td>
+
+            <td>
+                @Html.ActionLink("View", "Details", new { id = item.ClaimId })
+            </td>
+        </tr>
+    }
 
 </table>

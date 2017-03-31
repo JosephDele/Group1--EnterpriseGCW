@@ -168,6 +168,7 @@
       <DependentUpon>ECentity.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\ACEDEMIC_YEARController.cs" />
+    <Compile Include="Controllers\CoordinatorController.cs" />
     <Compile Include="Controllers\EC_CLAIMSController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />

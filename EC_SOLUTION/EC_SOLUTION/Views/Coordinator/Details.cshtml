@@ -23,7 +23,7 @@
         <div class="col-lg-6">
             <div class="jumbotron">
                 <h3>
-                    Claims Information 
+                    Claims Information
                     <small>
                         for @Html.DisplayFor(model => model.StudentId)
                         <br> posted on @Html.DisplayFor(model => model.Date)
@@ -55,7 +55,7 @@
                     @if (((Login)Session["loggedUser"]).role == "COORDINATOR")
                     {
                         <tr>
-                            <td> @Html.ActionLink("Reject Claim","Rejected", new { id = Model.ClaimId }, htmlAttributes: new { @class = "btn btn-danger" } ) </td>
+                            <td> @Html.ActionLink("Reject Claim", "Rejected", new { id = Model.ClaimId }, htmlAttributes: new { @class = "btn btn-danger" }) </td>
                             <td> @Html.ActionLink("Accept Claim", "Accepted", new { id = Model.ClaimId }, htmlAttributes: new { @class = "btn btn-primary" }) </td>
                         </tr>
                     }
@@ -65,15 +65,15 @@
 
         <div class="col-lg-6">
             <div class="jumbotron">
-               
-                 @foreach (var item in Model.Uploads)
-                 {
-                     
-                         <iframe src='@Html.DisplayFor(modelItem => item.FileName)' width="100%" height="200px"> </iframe>
-                         <a target="_blank" href='@Html.DisplayFor(modelItem => item.FileName)'> View &nbsp; @Html.DisplayFor(modelItem => item.Name) </a>
-                         <br>
-                 }
-               
+
+                @foreach (var item in Model.Uploads)
+                {
+
+                    <iframe src='@Html.DisplayFor(modelItem => item.FileName)' width="100%" height="200px"> </iframe>
+                    <a target="_blank" href='@Html.DisplayFor(modelItem => item.FileName)'> View &nbsp; @Html.DisplayFor(modelItem => item.Name) </a>
+                    <br>
+                }
+
             </div>
         </div>
     </div>
