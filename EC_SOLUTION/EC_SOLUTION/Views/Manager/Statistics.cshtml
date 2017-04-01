@@ -8,11 +8,11 @@
 
 <h2>Statistics</h2>
 <div class="container">
-<div class="row">
-    @foreach (FACULTY fac in (new ECDB_EWDFINALEntities()).FACULTies.ToList())
-    {
-        <div class="col-lg-6">
-            
+    <div class="row">
+        @foreach (FACULTY fac in (new ECDB_EWDFINALEntities()).FACULTies.ToList())
+        {
+            <div class="col-lg-6">
+
                 <h2> Statistical data for <small>@fac.Faculty_Name Faculty </small></h2>
                 <br>
                 @foreach (ACEDEMIC_YEAR year in (new ECDB_EWDFINALEntities().ACEDEMIC_YEAR.ToList()))
@@ -25,18 +25,18 @@
                             <td style="text-align: right; ">  @(new ECDB_EWDFINALEntities().EC_CLAIMS.ToList().Where(claim => claim.FacultyId == fac.FacultyId && claim.ACEDEMICYEARID == year.ACEDEMICYEARID).Count()) </td>
                             <td></td>
                         </tr>
-                        
+
                         <tr>
                             <td>Precentage of Claims</td>
-                            @{ 
+                            @{
                                 int total_Claim_Per_Faculty = (new ECDB_EWDFINALEntities().EC_CLAIMS.ToList().Where(claim => claim.FacultyId == fac.FacultyId).Count());
 
                                 int total_Claim_Per_Faculty_currentYear = ((new ECDB_EWDFINALEntities().EC_CLAIMS.ToList()).Where(claim => claim.FacultyId == fac.FacultyId && claim.ACEDEMICYEARID == year.ACEDEMICYEARID).Count());
                                 double percentage = total_Claim_Per_Faculty == 0 ? 0 : (total_Claim_Per_Faculty_currentYear / total_Claim_Per_Faculty) * 100;
-                                
+
                                 <td style="text-align: right; ">  @percentage% </td>
                                 <td></td>
-                            } 
+                            }
                         </tr>
                         <tr>
                             <td> Number of Student Making Claims </td>
@@ -46,12 +46,12 @@
                     </table>
 
                     <hr>
-                    <hr>
-                }
+                                <hr>
+                                }
                 <br><br>
                 <hr><hr>
             </div>
-      
-    }
-</div>
+
+                                }
     </div>
+</div>

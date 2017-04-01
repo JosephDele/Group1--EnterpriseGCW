@@ -32,30 +32,31 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ACEDEMIC_YEAR.YEAR)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FACULTY.Faculty_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.STUDENT.First_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ClaimStatu.Status)
-        </td>
-        <td>
-            @Html.ActionLink("View", "Details","Coordinator", new { id = item.ClaimId },null)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ACEDEMIC_YEAR.YEAR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FACULTY.Faculty_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.STUDENT.First_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClaimStatu.Status)
+            </td>
+            <td>
+                @Html.ActionLink("View", "Details", "Coordinator", new { id = item.ClaimId }, null)
+            </td>
+        </tr>
+    }
 
 </table>
