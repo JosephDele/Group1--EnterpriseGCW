@@ -172,6 +172,7 @@
     <Compile Include="Controllers\EC_CLAIMSController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="ECentity.Context.cs">
