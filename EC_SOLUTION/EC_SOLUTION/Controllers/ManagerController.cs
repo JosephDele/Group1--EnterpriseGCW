@@ -8,10 +8,20 @@ namespace EC_SOLUTION.Controllers
 {
     public class ManagerController : Controller
     {
-        // GET: Manager
-        public ActionResult Index()
+        ECDB_EWDFINALEntities db = new ECDB_EWDFINALEntities();
+        public ActionResult Statistics()
         {
-            return View();
+            return View(db.EC_CLAIMS.ToList());
+        }
+
+        public ActionResult ExceptionReports()
+        {
+            return View(db.EC_CLAIMS.ToList().Where(c => c.Uploads.Count() == 0));
+        }
+
+        public ActionResult Claims()
+        {
+            return View((new ECDB_EWDFINALEntities().EC_CLAIMS.ToList()));
         }
     }
 }
