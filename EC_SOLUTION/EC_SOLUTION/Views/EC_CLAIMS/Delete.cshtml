@@ -36,11 +36,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.FACULTY.Faculty_Name)
+            @Html.DisplayNameFor(model => model.STUDENT.FACULTY.Faculty_Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FACULTY.Faculty_Name)
+            @Html.DisplayFor(model => model.STUDENT.FACULTY.Faculty_Name)
         </dd>
 
         <dt>
@@ -53,8 +53,7 @@
 
     </dl>
 
-    @using (Html.BeginForm())
-    {
+    @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

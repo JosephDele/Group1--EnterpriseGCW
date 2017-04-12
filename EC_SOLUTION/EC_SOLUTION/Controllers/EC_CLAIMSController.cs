@@ -18,14 +18,20 @@ namespace EC_SOLUTION.Controllers
         // GET: EC_CLAIMS
         public ActionResult Index()
         {
-            var eC_CLAIMS = db.EC_CLAIMS.Include(e => e.ACEDEMIC_YEAR).Include(e => e.FACULTY).Include(e => e.STUDENT);
+            if (Session["loggedUser"] == null)
+                return RedirectToAction("Index", "Login");
+
+            var eC_CLAIMS = db.EC_CLAIMS.Include(e => e.ACEDEMIC_YEAR).Include(e => e.STUDENT.FACULTY).Include(e => e.STUDENT);
             string sid = ((Login)Session["loggedUser"]).userid;
-            return View(eC_CLAIMS.ToList().Where(ec => ec.StudentId == sid));
+            return View(eC_CLAIMS.ToList().Where(ec => ec.StudentId == sid).OrderBy(claims => claims.Date).Reverse());
         }
 
         // GET: EC_CLAIMS/Details/5
         public ActionResult Details(int? id)
         {
+            if (Session["loggedUser"] == null)
+                return RedirectToAction("Index", "Login");
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -39,9 +45,23 @@ namespace EC_SOLUTION.Controllers
         }
 
         // GET: EC_CLAIMS/Create
-        public ActionResult Create()
+        public ActionResult CreateStep1()
         {
+            if (Session["loggedUser"] == null)
+                return RedirectToAction("Index", "Login");
 
+            string stdid = ((Login)Session["loggedUser"]).userid;
+            string facid = (db.STUDENTs.SingleOrDefault(st => st.StudentId == stdid)).FacultyId;
+            ViewBag.assesment = new SelectList((db.ASSESSEMENTs.Where(ass => ass.FACULTYID == facid)).ToList(), "ASSID", "ASSNAME");
+            //ViewBag.academicyear = new SelectList((), "ACEDEMICYEARID", "YEAR");
+            return View();
+        }
+        public ActionResult CreateStep2(int assesment)
+        {
+            if (Session["loggedUser"] == null)
+                return RedirectToAction("Index", "Login");
+
+            ViewBag.Itemid = new SelectList((db.ASSESSEMENTs.SingleOrDefault(ass => ass.ASSID == assesment).ITEMs.ToList()), "ITEMID", "ITEM_NAME");
             return View();
         }
 
@@ -50,27 +70,51 @@ namespace EC_SOLUTION.Controllers
             return (new Random()).Next(158953);
         }
 
-        // POST: EC_CLAIMS/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        private bool isDuplicated(string sid, string desc)
+        {
+            if (string.IsNullOrWhiteSpace(desc))
+                return false;
+            foreach (EC_CLAIMS ec in (db.EC_CLAIMS).ToList().Where(ec => ec.STUDENT.StudentId == sid))
+            {
+                if (string.IsNullOrWhiteSpace(ec.Description))
+                {
+                    continue;
+                }
+                if (ec.Description.ToLower().Trim() == desc.ToLower().Trim())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ClaimId,StudentId,Description,Date,ACEDEMICYEARID,FacultyId")] EC_CLAIMS eC_CLAIMS)
+        public ActionResult CreateStep2([Bind(Include = "ClaimId,StudentId,Description,Date,ACEDEMICYEARID,FacultyId")] EC_CLAIMS eC_CLAIMS, int assesment, int Itemid)
         {
+            ViewBag.Itemid = new SelectList((db.ASSESSEMENTs.SingleOrDefault(ass => ass.ASSID == assesment).ITEMs.ToList()), "ITEMID", "ITEM_NAME");
+            if (this.isDuplicated(((Login)Session["loggedUser"]).userid, eC_CLAIMS.Description))
+            {
+                ViewBag.DuplicateMessage = "You have a claim with same description";
+                return View();
+            }
             if (ModelState.IsValid)
             {
                 if (((Login)Session["loggedUser"]).role != "STUDENT")
                     return RedirectToAction("Index", "Login");
                 eC_CLAIMS.ClaimId = generateNum((new Random()).Next(9));
-                eC_CLAIMS.ACEDEMICYEARID = (new ECDB_EWDFINALEntities()).ACEDEMIC_YEAR.Single(a => a.STATUS == true).ACEDEMICYEARID;
+                eC_CLAIMS.ACEDEMICYEARID = (db.ACEDEMIC_YEAR.ToList().Where(year => year.STATUS.Value == true).ElementAt(0)).ACEDEMICYEARID;
                 eC_CLAIMS.StudentId = ((Login)Session["loggedUser"]).userid;
-                eC_CLAIMS.FacultyId = (new ECDB_EWDFINALEntities().STUDENTs.Single(s => s.StudentId == eC_CLAIMS.StudentId)).FacultyId;
+                eC_CLAIMS.Itemid = Itemid;
                 eC_CLAIMS.Date = DateTime.Parse(DateTime.Now.ToString());
-                eC_CLAIMS.ClaimStatusID = 1;
+                eC_CLAIMS.STATUS = "Pending";
                 db.EC_CLAIMS.Add(eC_CLAIMS);
                 db.SaveChanges();
                 // int numberofCoordinFac = (db.EC_COORDINATOR.ToList().Where(c => c.FacultyId == eC_CLAIMS.FacultyId)).Count();
-                EC_COORDINATOR coord = (db.EC_COORDINATOR.ToList().Where(c => c.FacultyId == eC_CLAIMS.FacultyId)).ToList().ElementAt(0);
+                string studentid = (((Login)Session["loggedUser"]).userid);
+                string facid = (db.STUDENTs.Single(s => s.StudentId == studentid).FacultyId);
+                EC_COORDINATOR coord = (db.EC_COORDINATOR.ToList().Where(c => c.FacultyId == facid)).ToList().ElementAt(0);
                 if (coord != null)
                 {
                     STUDENT student = db.STUDENTs.Find(eC_CLAIMS.StudentId);
@@ -78,16 +122,21 @@ namespace EC_SOLUTION.Controllers
                         "\nStudent Name : " + student.First_Name + " " + student.Last_Name;
                     MMS.sendEmail("Claim Request to your Faculty", content, coord.Email);
                 }
+                ModelState.Clear();
+                ViewBag.SuccessMessage = "Claim Has been successfully added";
+                ViewBag.Itemid = new SelectList((db.ASSESSEMENTs.SingleOrDefault(ass => ass.ASSID == assesment).ITEMs.ToList()), "ITEMID", "ITEM_NAME");
 
-                return RedirectToAction("Index");
             }
+            return View();
 
-            return View("Index");
         }
 
         // GET: EC_CLAIMS/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Session["loggedUser"] == null)
+                return RedirectToAction("Index", "Login");
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

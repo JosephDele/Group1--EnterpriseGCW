@@ -13,6 +13,9 @@ namespace EC_SOLUTION.Controllers
         // GET: Student
         public ActionResult AddStudent()
         {
+            if (Session["loggedUser"] == null)
+                return RedirectToAction("Index", "Login");
+
             ViewBag.FacultyId = new SelectList((new ECDB_EWDFINALEntities().FACULTies.ToList()), "FacultyId", "Faculty_Name");
             return View();
         }
@@ -30,32 +33,38 @@ namespace EC_SOLUTION.Controllers
         [HttpPost]
         public ActionResult AddStudent(STUDENT student)
         {
+            if (Session["loggedUser"] == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            ViewBag.FacultyId = new SelectList((new ECDB_EWDFINALEntities().FACULTies.ToList()), "FacultyId", "Faculty_Name");
+
             if (ModelState.IsValid)
             {
-                if (student.Email.Contains("@") && student.Email.Contains("."))
-                {
-                    using (ECDB_EWDFINALEntities ec = new ECDB_EWDFINALEntities())
-                    {
 
-                        student.StudentId = generateID();
-                        student.Username = student.First_Name + student.StudentId;
-                        student.Password = "12345";
-                        MMS.UpdateStudent(student);
-                        MMS.sendEmail("Student Username and Password", "Username : " + student.Username + "\nPassword : " + student.Password, student.Email);
-                        ec.STUDENTs.Add(student);
-                        ViewBag.fid = student.FacultyId;
-                        ViewBag.FacultyId = new SelectList((new ECDB_EWDFINALEntities().FACULTies.ToList()), "FacultyId", "Faculty_Name");
-                        ec.SaveChanges();
-                    }
-                    return RedirectToAction("Index");
+                using (ECDB_EWDFINALEntities ec = new ECDB_EWDFINALEntities())
+                {
+
+                    student.StudentId = generateID();
+                    student.Username = student.First_Name + student.StudentId;
+                    student.Password = "12345";
+                    MMS.UpdateStudent(student);
+                    MMS.sendEmail("Student Username and Password", "Username : " + student.Username + "\nPassword : " + student.Password, student.Email);
+                    ec.STUDENTs.Add(student);
+                    ViewBag.fid = student.FacultyId;
+                    ViewBag.FacultyId = new SelectList((new ECDB_EWDFINALEntities().FACULTies.ToList()), "FacultyId", "Faculty_Name");
+                    ec.SaveChanges();
                 }
+                return RedirectToAction("Index");
+
             }
             else
             {
-                ModelState.Clear();
+                //ModelState.Clear();
                 return View();
             }
-            return View();
+
         }
         public ActionResult Home()
         {
@@ -74,6 +83,7 @@ namespace EC_SOLUTION.Controllers
 
         public ActionResult ResetPassword()
         {
+
             if (Session["loggedUser"] == null)
                 return RedirectToAction("Index", "Login");
 
@@ -127,6 +137,9 @@ namespace EC_SOLUTION.Controllers
 
         public ActionResult Edit(string id)
         {
+            if (Session["loggedUser"] == null)
+                return RedirectToAction("Index", "Login");
+
             if (id == null)
                 return HttpNotFound();
             ViewBag.FacultyId = new SelectList((new ECDB_EWDFINALEntities().FACULTies.ToList()), "FacultyId", "Faculty_Name");

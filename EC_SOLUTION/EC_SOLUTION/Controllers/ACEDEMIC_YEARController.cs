@@ -46,7 +46,7 @@ namespace EC_SOLUTION.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ACEDEMICYEARID,YEAR,STATUS,closuredate")] ACEDEMIC_YEAR aCEDEMIC_YEAR)
+        public ActionResult Create(ACEDEMIC_YEAR aCEDEMIC_YEAR)
         {
             if (ModelState.IsValid)
             {
@@ -71,6 +71,13 @@ namespace EC_SOLUTION.Controllers
             return View(aCEDEMIC_YEAR);
         }
 
+
+        public ActionResult SetClosureDate(int? id)
+        {
+            return View(db.ACEDEMIC_YEAR.Find(id));
+        }
+
+
         // GET: ACEDEMIC_YEAR/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -91,7 +98,7 @@ namespace EC_SOLUTION.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ACEDEMICYEARID,YEAR,STATUS,closuredate")] ACEDEMIC_YEAR aCEDEMIC_YEAR)
+        public ActionResult Edit(ACEDEMIC_YEAR aCEDEMIC_YEAR)
         {
             if (ModelState.IsValid)
             {

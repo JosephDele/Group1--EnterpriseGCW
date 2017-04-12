@@ -955,22 +955,11 @@
     <Content Include="Styles\php-version\typography.php" />
     <Content Include="Styles\php-version\ui.php" />
     <Content Include="Styles\README.md" />
-    <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Coordinator\Index.cshtml" />
-    <Content Include="Views\EC_CLAIMS\Create.cshtml" />
-    <Content Include="Views\EC_CLAIMS\Delete.cshtml" />
-    <Content Include="Views\EC_CLAIMS\Details.cshtml" />
-    <Content Include="Views\EC_CLAIMS\Edit.cshtml" />
-    <Content Include="Views\EC_CLAIMS\Index.cshtml" />
     <Content Include="Views\Coordinator\Details.cshtml" />
     <Content Include="Views\Manager\Claims.cshtml" />
     <Content Include="Views\Manager\ExceptionReports.cshtml" />
     <Content Include="Views\Manager\Statistics.cshtml" />
-    <Content Include="Views\Student\AddStudent.cshtml" />
-    <Content Include="Views\Student\Delete.cshtml" />
-    <Content Include="Views\Student\Edit.cshtml" />
-    <Content Include="Views\Student\Generate.cshtml" />
-    <Content Include="Views\Student\ResetPassword.cshtml" />
     <Content Include="Views\ACEDEMIC_YEAR\Create.cshtml" />
     <Content Include="Views\ACEDEMIC_YEAR\Delete.cshtml" />
     <Content Include="Views\ACEDEMIC_YEAR\Details.cshtml" />
@@ -981,6 +970,19 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Upload\Index.cshtml" />
     <Content Include="Views\Manager\ScheduleReport.cshtml" />
+    <Content Include="Views\EC_CLAIMS\Create.cshtml" />
+    <Content Include="Views\EC_CLAIMS\CreateStep1.cshtml" />
+    <Content Include="Views\EC_CLAIMS\CreateStep2.cshtml" />
+    <Content Include="Views\EC_CLAIMS\Delete.cshtml" />
+    <Content Include="Views\EC_CLAIMS\Details.cshtml" />
+    <Content Include="Views\EC_CLAIMS\Edit.cshtml" />
+    <Content Include="Views\EC_CLAIMS\Index.cshtml" />
+    <Content Include="Views\Student\AddStudent.cshtml" />
+    <Content Include="Views\Student\Delete.cshtml" />
+    <Content Include="Views\Student\Edit.cshtml" />
+    <Content Include="Views\Student\Generate.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
+    <Content Include="Views\Student\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,28 +1,46 @@
 ﻿@model EC_SOLUTION.EC_CLAIMS
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "CreateStep2";
 }
 
-<centre><h2>Add New</h2> </centre>
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-info" style="height:30px">
+        @ViewBag.SuccessMessage
+        <a href="/EC_CLAIMS/Index" style="float:right;" class="btn btn-primary"> Goto List </a>
+        <br>
+    </div>
+}
 
+
+<h2>CreateStep2</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Claims</h4>
+        <h4>EC_CLAIMS</h4>
+
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
+        <div class="form-group">
+            <label for="assessment" class="control-label col-md-2"> Item </label>
+            <div class="col-md-10">
+                @Html.DropDownList("Itemid", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
+                
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
+
 
         <div class="form-group">
             <div class="col-md-10" style="padding-left:150px">
@@ -30,8 +48,17 @@
             </div>
         </div>
     </div>
+
+    
 }
 
 <div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-10" style="color:red; font-family:Tahoma">
+            <center><b>@ViewBag.DuplicateMessage</b></center>
+        </div>
+    </div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+

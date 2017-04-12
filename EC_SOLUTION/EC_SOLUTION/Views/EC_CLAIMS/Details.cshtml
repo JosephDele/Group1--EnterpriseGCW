@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>EC_CLAIMS</h4>
+    <centre> <h4>Claim Detail</h4> </centre>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -35,11 +35,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.FACULTY.Faculty_Name)
+            @Html.DisplayNameFor(model => model.STUDENT.FACULTY.Faculty_Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FACULTY.Faculty_Name)
+            @Html.DisplayFor(model => model.STUDENT.FACULTY.Faculty_Name)
         </dd>
 
         <dt>
@@ -49,11 +49,20 @@
         <dd>
             @Html.DisplayFor(model => model.STUDENT.First_Name)
         </dd>
-
+        @foreach (var item in Model.Evidences)
+        {
+            <dt>
+                View Evidence ("@item.Name")
+            </dt>
+            <dd>
+                <a target="_blank" href='@Html.DisplayFor(modelItem => item.FileName)'> View &nbsp; @Html.DisplayFor(modelItem => item.Name) </a>
+            </dd>
+          
+        }
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Upload Claim Document", "Index", "Upload", new { id = Model.ClaimId }, null)
+    @Html.ActionLink("Upload Claim Document", "Index","Upload", new { id = Model.ClaimId }, null)
     <br><br>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ClaimId }) |
     @Html.ActionLink("Back to List", "Index")

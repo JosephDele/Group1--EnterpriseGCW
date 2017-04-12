@@ -4,10 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<centre><h2>List of Academin Years</h2></centre>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add New", "Create")
 </p>
 <table class="table">
     <tr>
@@ -16,6 +16,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.STATUS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STARTDATE)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.closuredate)
@@ -33,12 +36,18 @@
                 @Html.DisplayFor(modelItem => item.STATUS)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.STARTDATE)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.closuredate)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.ACEDEMICYEARID }) |
                 @Html.ActionLink("Details", "Details", new { id = item.ACEDEMICYEARID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ACEDEMICYEARID })
+                @if (item.EC_CLAIMS.ToList().Count == 0)
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ACEDEMICYEARID })
+                }
             </td>
         </tr>
     }
