@@ -1,0 +1,101 @@
+﻿@model IEnumerable<EC_SOLUTION.EC_CLAIMS>
+@using EC_SOLUTION.Models.EC_DB;
+@{
+    ViewBag.Title = "ScheduleReport";
+}
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<center><h2><small>Schedule Report</small></h2></center>
+<br>
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="jumbotron">
+                <h3>Weekly Report based on <small><em><b>Data Count</b></em></small></h3>
+                <table class="table table-condensed table-striped table-hover table-responsive" style="width:100%">
+
+                    <tr>
+                        <td> Number of Claim this Week </td>
+                        <td>
+                            @{
+                                int numberofClaimthisWeek = Model.Where(c => MMS.GetWeekOfYear(c.Date.Value.Date) == MMS.GetWeekOfYear(DateTime.Now.Date)).Count();
+                            }
+                            @numberofClaimthisWeek
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> Percentage of Claim This Week </td>
+
+                        <td>
+                            @{
+                                decimal percentofClaimUploadedthisWeek = (decimal.Divide(numberofClaimthisWeek, Model.Count())) * 100;
+
+                            }
+
+                            @(String.Format("{0:.#}", percentofClaimUploadedthisWeek))%
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td> Number of Student Making Claim This Week </td>
+                        <td>
+                            @{
+                                int numberofstudentMakingClaimThisWeek = Model.Where(c => MMS.GetWeekOfYear(c.Date.Value.Date) == MMS.GetWeekOfYear(DateTime.Now.Date)).GroupBy(c => c.StudentId).Count();
+                            }
+
+                            @numberofstudentMakingClaimThisWeek
+                        </td>
+                    </tr>
+
+                    @foreach (FACULTY fac in (new ECDB_EWDFINALEntities()).FACULTies.ToList())
+                    {
+                        <tr>
+                            <td> Number of Claims in @fac.Faculty_Name This Week </td>
+                            <td>
+                                @{
+                                    int numberOfClaimPerFacThisWeek = Model.Where(c => MMS.GetWeekOfYear(c.Date.Value.Date) == MMS.GetWeekOfYear(DateTime.Now.Date) && c.STUDENT.FACULTY.FacultyId == fac.FacultyId).Count();
+                                }
+
+                                @numberOfClaimPerFacThisWeek
+                            </td>
+                        </tr>
+                                    }
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="jumbotron">
+                <h3>Weekly Report based on <small><em><b>Percentage</b></em></small></h3>
+                <table class="table table-condensed table-striped table-hover table-responsive" style="width:100%">
+                    @foreach (FACULTY fac in (new ECDB_EWDFINALEntities()).FACULTies.ToList())
+                    {
+                        int numberOfClaimPerFacThisWeek = Model.Where(c => MMS.GetWeekOfYear(c.Date.Value.Date) == MMS.GetWeekOfYear(DateTime.Now.Date) && c.STUDENT.FACULTY.FacultyId == fac.FacultyId).Count();
+
+                        <tr>
+                            <td> Percentage of Claims in @fac.Faculty_Name This Week</td>
+                            <td>
+                                @{
+
+                                    decimal PercentageOfClaimPerFacThisWeek = (decimal.Divide(numberOfClaimPerFacThisWeek, numberofClaimthisWeek)) * 100;
+
+                                }
+
+                                @(numberOfClaimPerFacThisWeek == 0 ? "0" : (String.Format("{0:.#}", PercentageOfClaimPerFacThisWeek)))  %
+                            </td>
+                        </tr>
+                                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
