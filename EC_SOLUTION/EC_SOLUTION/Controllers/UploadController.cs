@@ -11,6 +11,9 @@ namespace EC_SOLUTION.Controllers
         // GET: Upload
         public ActionResult Index(int id)
         {
+            if (Session["loggedUser"] == null)
+                return RedirectToAction("Index", "Login");
+
             return View();
         }
         [HttpPost]
