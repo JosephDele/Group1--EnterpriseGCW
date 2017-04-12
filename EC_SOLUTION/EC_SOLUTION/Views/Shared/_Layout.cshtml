@@ -58,6 +58,7 @@
     <link href='/Styles/datetimepicker-master/jquery.datetimepicker.css' rel='stylesheet'>
 
 
+
     <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -77,6 +78,13 @@
             $("#navMenu1").html(strHtml);
         }
     </script>
+    <style>
+        input[type="submit"] {
+            padding-right: 20px;
+            padding-left: 20px;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -133,8 +141,10 @@
                                 else if (((Login)(Session["loggedUser"])).role == "MANAGER")
                                 {
                                     <li><a href="~/Manager/Statistics">System Statistics</a></li>
-                                    <li><a href="~/Manager/ExceptionReports">Exception Reports</a></li>
+                                    <li style='@(ViewBag.Page == "ExceptionReports" ? "background-color:cyan" : "")'><a href="~/Manager/ExceptionReports">Exception Reports</a></li>
                                     <li><a href="~/Manager/Claims">Claims</a></li>
+                                    <li><a href="~/Manager/ScheduleReport">Schedule Report</a></li>
+
                                 }
                                 else
                                 {
@@ -183,23 +193,11 @@
     <div class="container-fluid">
         @RenderBody()
 
-        <div class="modal hide fade" id="myModal">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h3 id="modelHeader">Settings</h3>
-            </div>
-            <div class="modal-body" id="modelBody">
-                <textarea class="cleditor"></textarea>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn" data-dismiss="modal" id="modelBtnClose">Close</a>
-                <a href="#" class="btn btn-primary" id="modelBtnSave">Save changes</a>
-            </div>
-        </div>
+
 
         <hr />
         <footer style="vertical-align:bottom; height:100px;">
-            <p class="pull-left">&copy; <a href="#" target="_blank">Group 1 CourseWork Team</a> 2015</p>
+            <p class="pull-left">&copy; <a href="#" target="_blank">Group 1 CourseWork Team</a> 2017</p>
             <p class="pull-right">Powered by: <a href="#">FPT</a></p>
         </footer>
 

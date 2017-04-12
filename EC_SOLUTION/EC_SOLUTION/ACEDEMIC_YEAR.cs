@@ -24,6 +24,7 @@ namespace EC_SOLUTION
         public string YEAR { get; set; }
         public Nullable<bool> STATUS { get; set; }
         public Nullable<System.DateTime> closuredate { get; set; }
+        public Nullable<System.DateTime> STARTDATE { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EC_CLAIMS> EC_CLAIMS { get; set; }

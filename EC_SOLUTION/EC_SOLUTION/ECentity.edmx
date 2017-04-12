@@ -13,21 +13,15 @@
           <Property Name="YEAR" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="STATUS" Type="bit" />
           <Property Name="closuredate" Type="date" />
+          <Property Name="STARTDATE" Type="date" />
         </EntityType>
-        <EntityType Name="ANAYLYSIS">
+        <EntityType Name="ASSESSEMENT">
           <Key>
-            <PropertyRef Name="ANAYLYSISID" />
+            <PropertyRef Name="ASSID" />
           </Key>
-          <Property Name="ANAYLYSISID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="LASTSENT" Type="date" />
-          <Property Name="HTMLANALYSIS" Type="varchar" MaxLength="5000" />
-        </EntityType>
-        <EntityType Name="ClaimStatus">
-          <Key>
-            <PropertyRef Name="ClaimStatusID" />
-          </Key>
-          <Property Name="ClaimStatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="ASSID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FACULTYID" Type="nvarchar" MaxLength="10" />
+          <Property Name="ASSNAME" Type="varchar" MaxLength="60" Nullable="false" />
         </EntityType>
         <EntityType Name="EC_ADMINISTRATOR">
           <Key>
@@ -48,8 +42,8 @@
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
           <Property Name="Date" Type="date" />
           <Property Name="ACEDEMICYEARID" Type="int" />
-          <Property Name="FacultyId" Type="nvarchar" MaxLength="10" />
-          <Property Name="ClaimStatusID" Type="int" />
+          <Property Name="STATUS" Type="varchar" MaxLength="10" />
+          <Property Name="Itemid" Type="int" />
         </EntityType>
         <EntityType Name="EC_COORDINATOR">
           <Key>
@@ -61,7 +55,6 @@
           <Property Name="Username" Type="nvarchar" MaxLength="30" />
           <Property Name="Password" Type="nvarchar" MaxLength="30" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
-          <Property Name="StudentId" Type="nvarchar" MaxLength="10" />
           <Property Name="FacultyId" Type="nvarchar" MaxLength="10" />
           <Property Name="ClaimId" Type="int" />
         </EntityType>
@@ -75,12 +68,34 @@
           <Property Name="Username" Type="nvarchar" MaxLength="30" />
           <Property Name="Password" Type="nvarchar" MaxLength="30" />
         </EntityType>
+        <EntityType Name="Evidence">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ContentType" Type="varchar" MaxLength="50" />
+          <Property Name="Size" Type="bigint" />
+          <Property Name="Data" Type="varbinary(max)" />
+          <Property Name="Time" Type="datetime" />
+          <Property Name="Status" Type="int" />
+          <Property Name="ClaimId" Type="int" />
+        </EntityType>
         <EntityType Name="FACULTY">
           <Key>
             <PropertyRef Name="FacultyId" />
           </Key>
           <Property Name="FacultyId" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Faculty_Name" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="ITEM">
+          <Key>
+            <PropertyRef Name="ITEMID" />
+          </Key>
+          <Property Name="ITEMID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSID" Type="int" />
+          <Property Name="ITEM_NAME" Type="varchar" MaxLength="60" />
         </EntityType>
         <EntityType Name="STUDENT">
           <Key>
@@ -96,31 +111,19 @@
           <Property Name="Address" Type="nvarchar" MaxLength="50" />
           <Property Name="FacultyId" Type="nvarchar" MaxLength="10" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
-        <EntityType Name="Uploads">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="100" />
-          <Property Name="FileName" Type="nvarchar" MaxLength="100" />
-          <Property Name="ContentType" Type="varchar" MaxLength="50" />
-          <Property Name="Size" Type="bigint" />
-          <Property Name="Data" Type="varbinary(max)" />
-          <Property Name="Time" Type="datetime" />
-          <Property Name="Status" Type="int" />
-          <Property Name="ClaimId" Type="int" />
-        </EntityType>
-        <Association Name="FK__EC_CLAIMS__ACEDE__4316F928">
+        <Association Name="FK__ASSESSEME__FACUL__24927208">
+          <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
+          <End Role="ASSESSEMENT" Type="Self.ASSESSEMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACULTY">
+              <PropertyRef Name="FacultyId" />
+            </Principal>
+            <Dependent Role="ASSESSEMENT">
+              <PropertyRef Name="FACULTYID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EC_CLAIMS__ACEDE__25869641">
           <End Role="ACEDEMIC_YEAR" Type="Self.ACEDEMIC_YEAR" Multiplicity="0..1" />
           <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -132,31 +135,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EC_CLAIMS__Claim__48CFD27E">
-          <End Role="ClaimStatus" Type="Self.ClaimStatus" Multiplicity="0..1" />
+        <Association Name="FK__EC_CLAIMS__Itemi__267ABA7A">
+          <End Role="ITEM" Type="Self.ITEM" Multiplicity="0..1" />
           <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ClaimStatus">
-              <PropertyRef Name="ClaimStatusID" />
+            <Principal Role="ITEM">
+              <PropertyRef Name="ITEMID" />
             </Principal>
             <Dependent Role="EC_CLAIMS">
-              <PropertyRef Name="ClaimStatusID" />
+              <PropertyRef Name="Itemid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EC_CLAIMS__Facul__44FF419A">
-          <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
-          <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FACULTY">
-              <PropertyRef Name="FacultyId" />
-            </Principal>
-            <Dependent Role="EC_CLAIMS">
-              <PropertyRef Name="FacultyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__EC_CLAIMS__Stude__1920BF5C">
+        <Association Name="FK__EC_CLAIMS__Stude__276EDEB3">
           <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="0..1" />
           <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -168,7 +159,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EC_COORDI__Claim__1DE57479">
+        <Association Name="FK__EC_COORDI__Claim__286302EC">
           <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="0..1" />
           <End Role="EC_COORDINATOR" Type="Self.EC_COORDINATOR" Multiplicity="*" />
           <ReferentialConstraint>
@@ -180,7 +171,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EC_COORDI__Facul__1CF15040">
+        <Association Name="FK__EC_COORDI__Facul__29572725">
           <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
           <End Role="EC_COORDINATOR" Type="Self.EC_COORDINATOR" Multiplicity="*" />
           <ReferentialConstraint>
@@ -192,19 +183,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EC_COORDI__Stude__1BFD2C07">
-          <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="0..1" />
-          <End Role="EC_COORDINATOR" Type="Self.EC_COORDINATOR" Multiplicity="*" />
+        <Association Name="FK__Evidence__ClaimI__2A4B4B5E">
+          <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="0..1" />
+          <End Role="Evidence" Type="Self.Evidence" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="STUDENT">
-              <PropertyRef Name="StudentId" />
+            <Principal Role="EC_CLAIMS">
+              <PropertyRef Name="ClaimId" />
             </Principal>
-            <Dependent Role="EC_COORDINATOR">
-              <PropertyRef Name="StudentId" />
+            <Dependent Role="Evidence">
+              <PropertyRef Name="ClaimId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__STUDENT__Faculty__164452B1">
+        <Association Name="FK__ITEM__ASSID__2B3F6F97">
+          <End Role="ASSESSEMENT" Type="Self.ASSESSEMENT" Multiplicity="0..1" />
+          <End Role="ITEM" Type="Self.ITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSESSEMENT">
+              <PropertyRef Name="ASSID" />
+            </Principal>
+            <Dependent Role="ITEM">
+              <PropertyRef Name="ASSID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__STUDENT__Faculty__2C3393D0">
           <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
           <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="*" />
           <ReferentialConstraint>
@@ -216,65 +219,52 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Uploads__ClaimId__21B6055D">
-          <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="0..1" />
-          <End Role="Uploads" Type="Self.Uploads" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EC_CLAIMS">
-              <PropertyRef Name="ClaimId" />
-            </Principal>
-            <Dependent Role="Uploads">
-              <PropertyRef Name="ClaimId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="ECDB_EWDFINALModelStoreContainer">
           <EntitySet Name="ACEDEMIC_YEAR" EntityType="Self.ACEDEMIC_YEAR" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ANAYLYSIS" EntityType="Self.ANAYLYSIS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ClaimStatus" EntityType="Self.ClaimStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ASSESSEMENT" EntityType="Self.ASSESSEMENT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EC_ADMINISTRATOR" EntityType="Self.EC_ADMINISTRATOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EC_CLAIMS" EntityType="Self.EC_CLAIMS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EC_COORDINATOR" EntityType="Self.EC_COORDINATOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EC_MANAGER" EntityType="Self.EC_MANAGER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Evidence" EntityType="Self.Evidence" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FACULTY" EntityType="Self.FACULTY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ITEM" EntityType="Self.ITEM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="STUDENT" EntityType="Self.STUDENT" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Uploads" EntityType="Self.Uploads" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__EC_CLAIMS__ACEDE__4316F928" Association="Self.FK__EC_CLAIMS__ACEDE__4316F928">
+          <AssociationSet Name="FK__ASSESSEME__FACUL__24927208" Association="Self.FK__ASSESSEME__FACUL__24927208">
+            <End Role="FACULTY" EntitySet="FACULTY" />
+            <End Role="ASSESSEMENT" EntitySet="ASSESSEMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EC_CLAIMS__ACEDE__25869641" Association="Self.FK__EC_CLAIMS__ACEDE__25869641">
             <End Role="ACEDEMIC_YEAR" EntitySet="ACEDEMIC_YEAR" />
             <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
           </AssociationSet>
-          <AssociationSet Name="FK__EC_CLAIMS__Claim__48CFD27E" Association="Self.FK__EC_CLAIMS__Claim__48CFD27E">
-            <End Role="ClaimStatus" EntitySet="ClaimStatus" />
+          <AssociationSet Name="FK__EC_CLAIMS__Itemi__267ABA7A" Association="Self.FK__EC_CLAIMS__Itemi__267ABA7A">
+            <End Role="ITEM" EntitySet="ITEM" />
             <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
           </AssociationSet>
-          <AssociationSet Name="FK__EC_CLAIMS__Facul__44FF419A" Association="Self.FK__EC_CLAIMS__Facul__44FF419A">
-            <End Role="FACULTY" EntitySet="FACULTY" />
-            <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__EC_CLAIMS__Stude__1920BF5C" Association="Self.FK__EC_CLAIMS__Stude__1920BF5C">
+          <AssociationSet Name="FK__EC_CLAIMS__Stude__276EDEB3" Association="Self.FK__EC_CLAIMS__Stude__276EDEB3">
             <End Role="STUDENT" EntitySet="STUDENT" />
             <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
           </AssociationSet>
-          <AssociationSet Name="FK__EC_COORDI__Claim__1DE57479" Association="Self.FK__EC_COORDI__Claim__1DE57479">
+          <AssociationSet Name="FK__EC_COORDI__Claim__286302EC" Association="Self.FK__EC_COORDI__Claim__286302EC">
             <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
             <End Role="EC_COORDINATOR" EntitySet="EC_COORDINATOR" />
           </AssociationSet>
-          <AssociationSet Name="FK__EC_COORDI__Facul__1CF15040" Association="Self.FK__EC_COORDI__Facul__1CF15040">
+          <AssociationSet Name="FK__EC_COORDI__Facul__29572725" Association="Self.FK__EC_COORDI__Facul__29572725">
             <End Role="FACULTY" EntitySet="FACULTY" />
             <End Role="EC_COORDINATOR" EntitySet="EC_COORDINATOR" />
           </AssociationSet>
-          <AssociationSet Name="FK__EC_COORDI__Stude__1BFD2C07" Association="Self.FK__EC_COORDI__Stude__1BFD2C07">
-            <End Role="STUDENT" EntitySet="STUDENT" />
-            <End Role="EC_COORDINATOR" EntitySet="EC_COORDINATOR" />
-          </AssociationSet>
-          <AssociationSet Name="FK__STUDENT__Faculty__164452B1" Association="Self.FK__STUDENT__Faculty__164452B1">
-            <End Role="FACULTY" EntitySet="FACULTY" />
-            <End Role="STUDENT" EntitySet="STUDENT" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Uploads__ClaimId__21B6055D" Association="Self.FK__Uploads__ClaimId__21B6055D">
+          <AssociationSet Name="FK__Evidence__ClaimI__2A4B4B5E" Association="Self.FK__Evidence__ClaimI__2A4B4B5E">
             <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
-            <End Role="Uploads" EntitySet="Uploads" />
+            <End Role="Evidence" EntitySet="Evidence" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ITEM__ASSID__2B3F6F97" Association="Self.FK__ITEM__ASSID__2B3F6F97">
+            <End Role="ASSESSEMENT" EntitySet="ASSESSEMENT" />
+            <End Role="ITEM" EntitySet="ITEM" />
+          </AssociationSet>
+          <AssociationSet Name="FK__STUDENT__Faculty__2C3393D0" Association="Self.FK__STUDENT__Faculty__2C3393D0">
+            <End Role="FACULTY" EntitySet="FACULTY" />
+            <End Role="STUDENT" EntitySet="STUDENT" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -290,23 +280,18 @@
           <Property Name="YEAR" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="STATUS" Type="Boolean" />
           <Property Name="closuredate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="EC_CLAIMS" Relationship="Self.FK__EC_CLAIMS__ACEDE__4316F928" FromRole="ACEDEMIC_YEAR" ToRole="EC_CLAIMS" />
+          <Property Name="STARTDATE" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="EC_CLAIMS" Relationship="Self.FK__EC_CLAIMS__ACEDE__25869641" FromRole="ACEDEMIC_YEAR" ToRole="EC_CLAIMS" />
         </EntityType>
-        <EntityType Name="ANAYLYSI">
+        <EntityType Name="ASSESSEMENT">
           <Key>
-            <PropertyRef Name="ANAYLYSISID" />
+            <PropertyRef Name="ASSID" />
           </Key>
-          <Property Name="ANAYLYSISID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LASTSENT" Type="DateTime" Precision="0" />
-          <Property Name="HTMLANALYSIS" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="ClaimStatu">
-          <Key>
-            <PropertyRef Name="ClaimStatusID" />
-          </Key>
-          <Property Name="ClaimStatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="EC_CLAIMS" Relationship="Self.FK__EC_CLAIMS__Claim__48CFD27E" FromRole="ClaimStatus" ToRole="EC_CLAIMS" />
+          <Property Name="ASSID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FACULTYID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ASSNAME" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="FACULTY" Relationship="Self.FK__ASSESSEME__FACUL__24927208" FromRole="ASSESSEMENT" ToRole="FACULTY" />
+          <NavigationProperty Name="ITEMs" Relationship="Self.FK__ITEM__ASSID__2B3F6F97" FromRole="ASSESSEMENT" ToRole="ITEM" />
         </EntityType>
         <EntityType Name="EC_ADMINISTRATOR">
           <Key>
@@ -327,14 +312,13 @@
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Date" Type="DateTime" Precision="0" />
           <Property Name="ACEDEMICYEARID" Type="Int32" />
-          <Property Name="FacultyId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="ClaimStatusID" Type="Int32" />
-          <NavigationProperty Name="ACEDEMIC_YEAR" Relationship="Self.FK__EC_CLAIMS__ACEDE__4316F928" FromRole="EC_CLAIMS" ToRole="ACEDEMIC_YEAR" />
-          <NavigationProperty Name="ClaimStatu" Relationship="Self.FK__EC_CLAIMS__Claim__48CFD27E" FromRole="EC_CLAIMS" ToRole="ClaimStatus" />
-          <NavigationProperty Name="FACULTY" Relationship="Self.FK__EC_CLAIMS__Facul__44FF419A" FromRole="EC_CLAIMS" ToRole="FACULTY" />
-          <NavigationProperty Name="STUDENT" Relationship="Self.FK__EC_CLAIMS__Stude__1920BF5C" FromRole="EC_CLAIMS" ToRole="STUDENT" />
-          <NavigationProperty Name="EC_COORDINATOR" Relationship="Self.FK__EC_COORDI__Claim__1DE57479" FromRole="EC_CLAIMS" ToRole="EC_COORDINATOR" />
-          <NavigationProperty Name="Uploads" Relationship="Self.FK__Uploads__ClaimId__21B6055D" FromRole="EC_CLAIMS" ToRole="Uploads" />
+          <Property Name="STATUS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Itemid" Type="Int32" />
+          <NavigationProperty Name="ACEDEMIC_YEAR" Relationship="Self.FK__EC_CLAIMS__ACEDE__25869641" FromRole="EC_CLAIMS" ToRole="ACEDEMIC_YEAR" />
+          <NavigationProperty Name="ITEM" Relationship="Self.FK__EC_CLAIMS__Itemi__267ABA7A" FromRole="EC_CLAIMS" ToRole="ITEM" />
+          <NavigationProperty Name="STUDENT" Relationship="Self.FK__EC_CLAIMS__Stude__276EDEB3" FromRole="EC_CLAIMS" ToRole="STUDENT" />
+          <NavigationProperty Name="EC_COORDINATOR" Relationship="Self.FK__EC_COORDI__Claim__286302EC" FromRole="EC_CLAIMS" ToRole="EC_COORDINATOR" />
+          <NavigationProperty Name="Evidences" Relationship="Self.FK__Evidence__ClaimI__2A4B4B5E" FromRole="EC_CLAIMS" ToRole="Evidence" />
         </EntityType>
         <EntityType Name="EC_COORDINATOR">
           <Key>
@@ -346,12 +330,10 @@
           <Property Name="Username" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StudentId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="FacultyId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="ClaimId" Type="Int32" />
-          <NavigationProperty Name="EC_CLAIMS" Relationship="Self.FK__EC_COORDI__Claim__1DE57479" FromRole="EC_COORDINATOR" ToRole="EC_CLAIMS" />
-          <NavigationProperty Name="FACULTY" Relationship="Self.FK__EC_COORDI__Facul__1CF15040" FromRole="EC_COORDINATOR" ToRole="FACULTY" />
-          <NavigationProperty Name="STUDENT" Relationship="Self.FK__EC_COORDI__Stude__1BFD2C07" FromRole="EC_COORDINATOR" ToRole="STUDENT" />
+          <NavigationProperty Name="EC_CLAIMS" Relationship="Self.FK__EC_COORDI__Claim__286302EC" FromRole="EC_COORDINATOR" ToRole="EC_CLAIMS" />
+          <NavigationProperty Name="FACULTY" Relationship="Self.FK__EC_COORDI__Facul__29572725" FromRole="EC_COORDINATOR" ToRole="FACULTY" />
         </EntityType>
         <EntityType Name="EC_MANAGER">
           <Key>
@@ -363,15 +345,40 @@
           <Property Name="Username" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Evidence">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Size" Type="Int64" />
+          <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Time" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="ClaimId" Type="Int32" />
+          <NavigationProperty Name="EC_CLAIMS" Relationship="Self.FK__Evidence__ClaimI__2A4B4B5E" FromRole="Evidence" ToRole="EC_CLAIMS" />
+        </EntityType>
         <EntityType Name="FACULTY">
           <Key>
             <PropertyRef Name="FacultyId" />
           </Key>
           <Property Name="FacultyId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Faculty_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="EC_CLAIMS" Relationship="Self.FK__EC_CLAIMS__Facul__44FF419A" FromRole="FACULTY" ToRole="EC_CLAIMS" />
-          <NavigationProperty Name="EC_COORDINATOR" Relationship="Self.FK__EC_COORDI__Facul__1CF15040" FromRole="FACULTY" ToRole="EC_COORDINATOR" />
-          <NavigationProperty Name="STUDENTs" Relationship="Self.FK__STUDENT__Faculty__164452B1" FromRole="FACULTY" ToRole="STUDENT" />
+          <NavigationProperty Name="ASSESSEMENTs" Relationship="Self.FK__ASSESSEME__FACUL__24927208" FromRole="FACULTY" ToRole="ASSESSEMENT" />
+          <NavigationProperty Name="EC_COORDINATOR" Relationship="Self.FK__EC_COORDI__Facul__29572725" FromRole="FACULTY" ToRole="EC_COORDINATOR" />
+          <NavigationProperty Name="STUDENTs" Relationship="Self.FK__STUDENT__Faculty__2C3393D0" FromRole="FACULTY" ToRole="STUDENT" />
+        </EntityType>
+        <EntityType Name="ITEM">
+          <Key>
+            <PropertyRef Name="ITEMID" />
+          </Key>
+          <Property Name="ITEMID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSID" Type="Int32" />
+          <Property Name="ITEM_NAME" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ASSESSEMENT" Relationship="Self.FK__ITEM__ASSID__2B3F6F97" FromRole="ITEM" ToRole="ASSESSEMENT" />
+          <NavigationProperty Name="EC_CLAIMS" Relationship="Self.FK__EC_CLAIMS__Itemi__267ABA7A" FromRole="ITEM" ToRole="EC_CLAIMS" />
         </EntityType>
         <EntityType Name="STUDENT">
           <Key>
@@ -386,36 +393,10 @@
           <Property Name="DOB" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FacultyId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="EC_CLAIMS" Relationship="Self.FK__EC_CLAIMS__Stude__1920BF5C" FromRole="STUDENT" ToRole="EC_CLAIMS" />
-          <NavigationProperty Name="EC_COORDINATOR" Relationship="Self.FK__EC_COORDI__Stude__1BFD2C07" FromRole="STUDENT" ToRole="EC_COORDINATOR" />
-          <NavigationProperty Name="FACULTY" Relationship="Self.FK__STUDENT__Faculty__164452B1" FromRole="STUDENT" ToRole="FACULTY" />
+          <NavigationProperty Name="EC_CLAIMS" Relationship="Self.FK__EC_CLAIMS__Stude__276EDEB3" FromRole="STUDENT" ToRole="EC_CLAIMS" />
+          <NavigationProperty Name="FACULTY" Relationship="Self.FK__STUDENT__Faculty__2C3393D0" FromRole="STUDENT" ToRole="FACULTY" />
         </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="Upload">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Size" Type="Int64" />
-          <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="Time" Type="DateTime" Precision="3" />
-          <Property Name="Status" Type="Int32" />
-          <Property Name="ClaimId" Type="Int32" />
-          <NavigationProperty Name="EC_CLAIMS" Relationship="Self.FK__Uploads__ClaimId__21B6055D" FromRole="Uploads" ToRole="EC_CLAIMS" />
-        </EntityType>
-        <Association Name="FK__EC_CLAIMS__ACEDE__4316F928">
+        <Association Name="FK__EC_CLAIMS__ACEDE__25869641">
           <End Role="ACEDEMIC_YEAR" Type="Self.ACEDEMIC_YEAR" Multiplicity="0..1" />
           <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -427,31 +408,43 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EC_CLAIMS__Claim__48CFD27E">
-          <End Role="ClaimStatus" Type="Self.ClaimStatu" Multiplicity="0..1" />
-          <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClaimStatus">
-              <PropertyRef Name="ClaimStatusID" />
-            </Principal>
-            <Dependent Role="EC_CLAIMS">
-              <PropertyRef Name="ClaimStatusID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__EC_CLAIMS__Facul__44FF419A">
+        <Association Name="FK__ASSESSEME__FACUL__24927208">
           <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
-          <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="*" />
+          <End Role="ASSESSEMENT" Type="Self.ASSESSEMENT" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="FACULTY">
               <PropertyRef Name="FacultyId" />
             </Principal>
-            <Dependent Role="EC_CLAIMS">
-              <PropertyRef Name="FacultyId" />
+            <Dependent Role="ASSESSEMENT">
+              <PropertyRef Name="FACULTYID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EC_CLAIMS__Stude__1920BF5C">
+        <Association Name="FK__ITEM__ASSID__2B3F6F97">
+          <End Role="ASSESSEMENT" Type="Self.ASSESSEMENT" Multiplicity="0..1" />
+          <End Role="ITEM" Type="Self.ITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSESSEMENT">
+              <PropertyRef Name="ASSID" />
+            </Principal>
+            <Dependent Role="ITEM">
+              <PropertyRef Name="ASSID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EC_CLAIMS__Itemi__267ABA7A">
+          <End Role="ITEM" Type="Self.ITEM" Multiplicity="0..1" />
+          <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ITEM">
+              <PropertyRef Name="ITEMID" />
+            </Principal>
+            <Dependent Role="EC_CLAIMS">
+              <PropertyRef Name="Itemid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EC_CLAIMS__Stude__276EDEB3">
           <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="0..1" />
           <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -463,7 +456,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EC_COORDI__Claim__1DE57479">
+        <Association Name="FK__EC_COORDI__Claim__286302EC">
           <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="0..1" />
           <End Role="EC_COORDINATOR" Type="Self.EC_COORDINATOR" Multiplicity="*" />
           <ReferentialConstraint>
@@ -475,19 +468,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Uploads__ClaimId__21B6055D">
+        <Association Name="FK__Evidence__ClaimI__2A4B4B5E">
           <End Role="EC_CLAIMS" Type="Self.EC_CLAIMS" Multiplicity="0..1" />
-          <End Role="Uploads" Type="Self.Upload" Multiplicity="*" />
+          <End Role="Evidence" Type="Self.Evidence" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EC_CLAIMS">
               <PropertyRef Name="ClaimId" />
             </Principal>
-            <Dependent Role="Uploads">
+            <Dependent Role="Evidence">
               <PropertyRef Name="ClaimId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EC_COORDI__Facul__1CF15040">
+        <Association Name="FK__EC_COORDI__Facul__29572725">
           <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
           <End Role="EC_COORDINATOR" Type="Self.EC_COORDINATOR" Multiplicity="*" />
           <ReferentialConstraint>
@@ -499,19 +492,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EC_COORDI__Stude__1BFD2C07">
-          <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="0..1" />
-          <End Role="EC_COORDINATOR" Type="Self.EC_COORDINATOR" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="STUDENT">
-              <PropertyRef Name="StudentId" />
-            </Principal>
-            <Dependent Role="EC_COORDINATOR">
-              <PropertyRef Name="StudentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__STUDENT__Faculty__164452B1">
+        <Association Name="FK__STUDENT__Faculty__2C3393D0">
           <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
           <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="*" />
           <ReferentialConstraint>
@@ -525,49 +506,48 @@
         </Association>
         <EntityContainer Name="ECDB_EWDFINALEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ACEDEMIC_YEAR" EntityType="Self.ACEDEMIC_YEAR" />
-          <EntitySet Name="ANAYLYSIS" EntityType="Self.ANAYLYSI" />
-          <EntitySet Name="ClaimStatus" EntityType="Self.ClaimStatu" />
+          <EntitySet Name="ASSESSEMENTs" EntityType="Self.ASSESSEMENT" />
           <EntitySet Name="EC_ADMINISTRATOR" EntityType="Self.EC_ADMINISTRATOR" />
           <EntitySet Name="EC_CLAIMS" EntityType="Self.EC_CLAIMS" />
           <EntitySet Name="EC_COORDINATOR" EntityType="Self.EC_COORDINATOR" />
           <EntitySet Name="EC_MANAGER" EntityType="Self.EC_MANAGER" />
+          <EntitySet Name="Evidences" EntityType="Self.Evidence" />
           <EntitySet Name="FACULTies" EntityType="Self.FACULTY" />
+          <EntitySet Name="ITEMs" EntityType="Self.ITEM" />
           <EntitySet Name="STUDENTs" EntityType="Self.STUDENT" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="Uploads" EntityType="Self.Upload" />
-          <AssociationSet Name="FK__EC_CLAIMS__ACEDE__4316F928" Association="Self.FK__EC_CLAIMS__ACEDE__4316F928">
+          <AssociationSet Name="FK__EC_CLAIMS__ACEDE__25869641" Association="Self.FK__EC_CLAIMS__ACEDE__25869641">
             <End Role="ACEDEMIC_YEAR" EntitySet="ACEDEMIC_YEAR" />
             <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
           </AssociationSet>
-          <AssociationSet Name="FK__EC_CLAIMS__Claim__48CFD27E" Association="Self.FK__EC_CLAIMS__Claim__48CFD27E">
-            <End Role="ClaimStatus" EntitySet="ClaimStatus" />
-            <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__EC_CLAIMS__Facul__44FF419A" Association="Self.FK__EC_CLAIMS__Facul__44FF419A">
+          <AssociationSet Name="FK__ASSESSEME__FACUL__24927208" Association="Self.FK__ASSESSEME__FACUL__24927208">
             <End Role="FACULTY" EntitySet="FACULTies" />
+            <End Role="ASSESSEMENT" EntitySet="ASSESSEMENTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ITEM__ASSID__2B3F6F97" Association="Self.FK__ITEM__ASSID__2B3F6F97">
+            <End Role="ASSESSEMENT" EntitySet="ASSESSEMENTs" />
+            <End Role="ITEM" EntitySet="ITEMs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EC_CLAIMS__Itemi__267ABA7A" Association="Self.FK__EC_CLAIMS__Itemi__267ABA7A">
+            <End Role="ITEM" EntitySet="ITEMs" />
             <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
           </AssociationSet>
-          <AssociationSet Name="FK__EC_CLAIMS__Stude__1920BF5C" Association="Self.FK__EC_CLAIMS__Stude__1920BF5C">
+          <AssociationSet Name="FK__EC_CLAIMS__Stude__276EDEB3" Association="Self.FK__EC_CLAIMS__Stude__276EDEB3">
             <End Role="STUDENT" EntitySet="STUDENTs" />
             <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
           </AssociationSet>
-          <AssociationSet Name="FK__EC_COORDI__Claim__1DE57479" Association="Self.FK__EC_COORDI__Claim__1DE57479">
+          <AssociationSet Name="FK__EC_COORDI__Claim__286302EC" Association="Self.FK__EC_COORDI__Claim__286302EC">
             <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
             <End Role="EC_COORDINATOR" EntitySet="EC_COORDINATOR" />
           </AssociationSet>
-          <AssociationSet Name="FK__Uploads__ClaimId__21B6055D" Association="Self.FK__Uploads__ClaimId__21B6055D">
+          <AssociationSet Name="FK__Evidence__ClaimI__2A4B4B5E" Association="Self.FK__Evidence__ClaimI__2A4B4B5E">
             <End Role="EC_CLAIMS" EntitySet="EC_CLAIMS" />
-            <End Role="Uploads" EntitySet="Uploads" />
+            <End Role="Evidence" EntitySet="Evidences" />
           </AssociationSet>
-          <AssociationSet Name="FK__EC_COORDI__Facul__1CF15040" Association="Self.FK__EC_COORDI__Facul__1CF15040">
+          <AssociationSet Name="FK__EC_COORDI__Facul__29572725" Association="Self.FK__EC_COORDI__Facul__29572725">
             <End Role="FACULTY" EntitySet="FACULTies" />
             <End Role="EC_COORDINATOR" EntitySet="EC_COORDINATOR" />
           </AssociationSet>
-          <AssociationSet Name="FK__EC_COORDI__Stude__1BFD2C07" Association="Self.FK__EC_COORDI__Stude__1BFD2C07">
-            <End Role="STUDENT" EntitySet="STUDENTs" />
-            <End Role="EC_COORDINATOR" EntitySet="EC_COORDINATOR" />
-          </AssociationSet>
-          <AssociationSet Name="FK__STUDENT__Faculty__164452B1" Association="Self.FK__STUDENT__Faculty__164452B1">
+          <AssociationSet Name="FK__STUDENT__Faculty__2C3393D0" Association="Self.FK__STUDENT__Faculty__2C3393D0">
             <End Role="FACULTY" EntitySet="FACULTies" />
             <End Role="STUDENT" EntitySet="STUDENTs" />
           </AssociationSet>
@@ -585,23 +565,16 @@
                 <ScalarProperty Name="YEAR" ColumnName="YEAR" />
                 <ScalarProperty Name="STATUS" ColumnName="STATUS" />
                 <ScalarProperty Name="closuredate" ColumnName="closuredate" />
+                <ScalarProperty Name="STARTDATE" ColumnName="STARTDATE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ANAYLYSIS">
-            <EntityTypeMapping TypeName="ECDB_EWDFINALModel.ANAYLYSI">
-              <MappingFragment StoreEntitySet="ANAYLYSIS">
-                <ScalarProperty Name="ANAYLYSISID" ColumnName="ANAYLYSISID" />
-                <ScalarProperty Name="LASTSENT" ColumnName="LASTSENT" />
-                <ScalarProperty Name="HTMLANALYSIS" ColumnName="HTMLANALYSIS" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ClaimStatus">
-            <EntityTypeMapping TypeName="ECDB_EWDFINALModel.ClaimStatu">
-              <MappingFragment StoreEntitySet="ClaimStatus">
-                <ScalarProperty Name="ClaimStatusID" ColumnName="ClaimStatusID" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
+          <EntitySetMapping Name="ASSESSEMENTs">
+            <EntityTypeMapping TypeName="ECDB_EWDFINALModel.ASSESSEMENT">
+              <MappingFragment StoreEntitySet="ASSESSEMENT">
+                <ScalarProperty Name="ASSID" ColumnName="ASSID" />
+                <ScalarProperty Name="FACULTYID" ColumnName="FACULTYID" />
+                <ScalarProperty Name="ASSNAME" ColumnName="ASSNAME" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -624,8 +597,8 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="ACEDEMICYEARID" ColumnName="ACEDEMICYEARID" />
-                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
-                <ScalarProperty Name="ClaimStatusID" ColumnName="ClaimStatusID" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="Itemid" ColumnName="Itemid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -638,7 +611,6 @@
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
                 <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
                 <ScalarProperty Name="ClaimId" ColumnName="ClaimId" />
               </MappingFragment>
@@ -655,11 +627,35 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Evidences">
+            <EntityTypeMapping TypeName="ECDB_EWDFINALModel.Evidence">
+              <MappingFragment StoreEntitySet="Evidence">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ClaimId" ColumnName="ClaimId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="FACULTies">
             <EntityTypeMapping TypeName="ECDB_EWDFINALModel.FACULTY">
               <MappingFragment StoreEntitySet="FACULTY">
                 <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
                 <ScalarProperty Name="Faculty_Name" ColumnName="Faculty_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ITEMs">
+            <EntityTypeMapping TypeName="ECDB_EWDFINALModel.ITEM">
+              <MappingFragment StoreEntitySet="ITEM">
+                <ScalarProperty Name="ITEMID" ColumnName="ITEMID" />
+                <ScalarProperty Name="ASSID" ColumnName="ASSID" />
+                <ScalarProperty Name="ITEM_NAME" ColumnName="ITEM_NAME" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -675,32 +671,6 @@
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="ECDB_EWDFINALModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Uploads">
-            <EntityTypeMapping TypeName="ECDB_EWDFINALModel.Upload">
-              <MappingFragment StoreEntitySet="Uploads">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
-                <ScalarProperty Name="Size" ColumnName="Size" />
-                <ScalarProperty Name="Data" ColumnName="Data" />
-                <ScalarProperty Name="Time" ColumnName="Time" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ClaimId" ColumnName="ClaimId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

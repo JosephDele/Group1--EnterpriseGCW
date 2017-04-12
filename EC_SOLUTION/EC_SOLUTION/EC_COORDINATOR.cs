@@ -20,12 +20,10 @@ namespace EC_SOLUTION
         public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-        public string StudentId { get; set; }
         public string FacultyId { get; set; }
         public Nullable<int> ClaimId { get; set; }
     
         public virtual EC_CLAIMS EC_CLAIMS { get; set; }
         public virtual FACULTY FACULTY { get; set; }
-        public virtual STUDENT STUDENT { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace EC_SOLUTION
         public EC_CLAIMS()
         {
             this.EC_COORDINATOR = new HashSet<EC_COORDINATOR>();
-            this.Uploads = new HashSet<Upload>();
+            this.Evidences = new HashSet<Evidence>();
         }
     
         public int ClaimId { get; set; }
@@ -26,16 +26,15 @@ namespace EC_SOLUTION
         public string Description { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<int> ACEDEMICYEARID { get; set; }
-        public string FacultyId { get; set; }
-        public Nullable<int> ClaimStatusID { get; set; }
+        public string STATUS { get; set; }
+        public Nullable<int> Itemid { get; set; }
     
         public virtual ACEDEMIC_YEAR ACEDEMIC_YEAR { get; set; }
-        public virtual ClaimStatu ClaimStatu { get; set; }
-        public virtual FACULTY FACULTY { get; set; }
+        public virtual ITEM ITEM { get; set; }
         public virtual STUDENT STUDENT { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EC_COORDINATOR> EC_COORDINATOR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Upload> Uploads { get; set; }
+        public virtual ICollection<Evidence> Evidences { get; set; }
     }
 }

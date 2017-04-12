@@ -1,46 +1,121 @@
 ﻿@{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/NonAuthenticatedLayout.cshtml";
+    Layout = null;
 }
 
 
-<div class="row-fluid">
-    <!--Top large image starts here-->
-    <div class="span12">
-        <img src="~/images/UOG.jpg" width="100%" height="auto" />
-    </div>
-</div>
+<!doctype html>
+<html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-<div class="row-fluid">
-    <!--bottom informations starts here-->
-    <div class="span12">
-        <div class="row-fluid">
-            <div class="span4">
-                <h2>View Students</h2>
-                <p>
-                    Here we have information about your students and individual student project works, course materials, assesments and much more...
-                </p>
-                <p><a class="btn btn-default" href="/User/Students">View More &raquo;</a></p>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body style="background-image:url(http://www.une.edu/sites/default/files/styles/image_gallery/public/_I6T2707.JPG?itok=FfXOUC1-); background-repeat: no-repeat;background-size: cover;">
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="col-lg-7" style="padding:70px; padding-top:150px">
+                <img src="https://orca.gre.ac.uk//cas/gre/img/logo_dark.png" height="100">
             </div>
-            <div class="span4">
-                <h2>View Projects</h2>
-                <p>
-                    Here we have information about individual student project works, course materials, assesments, submission links and much more...
-                </p>
-                <p><a class="btn btn-default" href="/Project">View More &raquo;</a></p>
+        </div>
+        <div class="col-lg-5" style="background:rgba(81, 107, 150,0.5);">
+            <br><br>
+            <blockquote>
+                <p style="padding-top:20px; font-family:Tahoma; color:white;">
+                    <b>
+
+                        My time at Greenwich helped develop my technical and creative skills which form the foundation of my business enterprises,
+                        including producing my own music, videos and clothing ranges.
+                    </b>
+                    <footer style="color:white;">
+                        Jme, Jamie Adenuga Grime artist. Vegan. CEO Boy Better Know.
+                        Greenwich Portraits project
+                    </footer>
+
+            </blockquote>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-7">
+
+            <div style="height:330px; width:300px; display:block;padding:20px; padding-left:60px">
+                <div style="background:rgba(81, 107, 150,0.5); height:inherit; width:inherit; padding:20px">
+                    <form action='/Login/Index' method="post">
+                        <div class="form-group" style="padding-bottom:15px">
+                            <input type="text" placeholder="Your Username" name='Username' class="form-control">
+                        </div>
+                        <div class="form-group" style="padding-bottom:15px">
+                            <input type="password" placeholder="Your Password" name='Password' class="form-control">
+                        </div>
+                        <div class="form-group" style="padding-bottom:15px">
+                            <input type="submit" value="Login" class="btn btn-primary form-control">
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <span class="glyphicon glyphicon-wrench " style="font-size: 50px; color:white"></span>
+                            </div>
+                            <div class="col-lg-9">
+                                <p style="color:white">
+                                    <b>
+                                        Regular system maintenance takes place between 07:00
+                                        and 09:00 GMT+1 (BST) each Tuesday.
+                                    </b>
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="span4">
-                <h2>View Reports</h2>
-                <p>
-                    Here we have reports on different aspects like report of number of messages in last 7 days, report of students with no interaction for 7 days and 28 days...
-                </p>
-                <p><a class="btn btn-default" href="/User/List">View More &raquo;</a></p>
+
+        </div>
+    </div>
+</body>
+</html>
+
+
+@*<div class="row-fluid">
+        <!--Top large image starts here-->
+        <div class="span12">
+            <img src="~/images/UOG.jpg" width="100%" height="auto" />
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <!--bottom informations starts here-->
+        <div class="span12">
+            <div class="row-fluid">
+                <div class="span4">
+                    <h2>View Students</h2>
+                    <p>
+                        Here we have information about your students and individual student project works, course materials, assesments and much more...
+                    </p>
+                    <p><a class="btn btn-default" href="/User/Students">View More &raquo;</a></p>
+                </div>
+                <div class="span4">
+                    <h2>View Projects</h2>
+                    <p>
+                        Here we have information about individual student project works, course materials, assesments, submission links and much more...
+                    </p>
+                    <p><a class="btn btn-default" href="/Project">View More &raquo;</a></p>
+                </div>
+                <div class="span4">
+                    <h2>View Reports</h2>
+                    <p>
+                        Here we have reports on different aspects like report of number of messages in last 7 days, report of students with no interaction for 7 days and 28 days...
+                    </p>
+                    <p><a class="btn btn-default" href="/User/List">View More &raquo;</a></p>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<br />
-<!--Large image ends here-->
+    <br />
+    <!--Large image ends here-->
 
-<br /><br />
-<!--bottom informations ends here-->
+    <br /><br />
+    <!--bottom informations ends here-->*@

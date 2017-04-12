@@ -12,26 +12,20 @@ namespace EC_SOLUTION
     using System;
     using System.Collections.Generic;
     
-    public partial class STUDENT
+    public partial class ITEM
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public STUDENT()
+        public ITEM()
         {
             this.EC_CLAIMS = new HashSet<EC_CLAIMS>();
         }
     
-        public string StudentId { get; set; }
-        public string First_Name { get; set; }
-        public string Last_Name { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
-        public string DOB { get; set; }
-        public string Address { get; set; }
-        public string FacultyId { get; set; }
+        public int ITEMID { get; set; }
+        public Nullable<int> ASSID { get; set; }
+        public string ITEM_NAME { get; set; }
     
+        public virtual ASSESSEMENT ASSESSEMENT { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EC_CLAIMS> EC_CLAIMS { get; set; }
-        public virtual FACULTY FACULTY { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace EC_SOLUTION.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Index(int id, HttpPostedFileBase file, Upload upload)
+        public ActionResult Index(int id, HttpPostedFileBase file, Evidence upload)
         {
             if (ModelState.IsValid)
             {
@@ -23,7 +23,7 @@ namespace EC_SOLUTION.Controllers
                     upload.ClaimId = id;
                     upload.FileName = "/ClamDoc/" + file.FileName.Split('\\')[file.FileName.Split('\\').Length - 1];
                     file.SaveAs(Server.MapPath("~/ClamDoc/") + file.FileName.Split('\\')[file.FileName.Split('\\').Length - 1]);
-                    db.Uploads.Add(upload);
+                    db.Evidences.Add(upload);
                     db.SaveChanges();
                     return RedirectToAction("Index", "EC_CLAIMS");
                 }

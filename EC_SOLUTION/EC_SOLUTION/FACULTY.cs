@@ -17,7 +17,7 @@ namespace EC_SOLUTION
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public FACULTY()
         {
-            this.EC_CLAIMS = new HashSet<EC_CLAIMS>();
+            this.ASSESSEMENTs = new HashSet<ASSESSEMENT>();
             this.EC_COORDINATOR = new HashSet<EC_COORDINATOR>();
             this.STUDENTs = new HashSet<STUDENT>();
         }
@@ -26,7 +26,7 @@ namespace EC_SOLUTION
         public string Faculty_Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EC_CLAIMS> EC_CLAIMS { get; set; }
+        public virtual ICollection<ASSESSEMENT> ASSESSEMENTs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EC_COORDINATOR> EC_COORDINATOR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

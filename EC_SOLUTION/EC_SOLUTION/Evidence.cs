@@ -12,12 +12,18 @@ namespace EC_SOLUTION
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class Evidence
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string FileName { get; set; }
+        public string ContentType { get; set; }
+        public Nullable<long> Size { get; set; }
+        public byte[] Data { get; set; }
+        public Nullable<System.DateTime> Time { get; set; }
+        public Nullable<int> Status { get; set; }
+        public Nullable<int> ClaimId { get; set; }
+    
+        public virtual EC_CLAIMS EC_CLAIMS { get; set; }
     }
 }

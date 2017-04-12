@@ -12,18 +12,20 @@ namespace EC_SOLUTION
     using System;
     using System.Collections.Generic;
     
-    public partial class ClaimStatu
+    public partial class ASSESSEMENT
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ClaimStatu()
+        public ASSESSEMENT()
         {
-            this.EC_CLAIMS = new HashSet<EC_CLAIMS>();
+            this.ITEMs = new HashSet<ITEM>();
         }
     
-        public int ClaimStatusID { get; set; }
-        public string Status { get; set; }
+        public int ASSID { get; set; }
+        public string FACULTYID { get; set; }
+        public string ASSNAME { get; set; }
     
+        public virtual FACULTY FACULTY { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EC_CLAIMS> EC_CLAIMS { get; set; }
+        public virtual ICollection<ITEM> ITEMs { get; set; }
     }
 }
